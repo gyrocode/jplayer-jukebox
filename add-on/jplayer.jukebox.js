@@ -105,7 +105,7 @@
             + '               </ul>'
             + '            </div>'
             + '            <div class="jp-title"><ul><li></li></ul></div>'
-            + '            <div class="jp-visibility-toggle"><div class="jp-visibility-toggle-arrow"></div></div>'
+            + '            <div class="jp-visibility-toggle jp-visibility-toggle-on"><div class="jp-visibility-toggle-arrow"></div></div>'
             + '         </div>'
             + '      </div>'
             + '   </div>'
