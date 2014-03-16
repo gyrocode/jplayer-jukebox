@@ -8,7 +8,7 @@
  *
  * Author: Michael Ryvkin (http://wwww.ponticstar.com/projects/jplayer-jukebox)
  * Version: 0.3
- * Date: 3/14/2014
+ * Date: 3/15/2014
  */
 
 (function($, undefined){
@@ -50,9 +50,9 @@
          smoothPlayBar: true,
          keyEnabled: true,
          audioFullScreen: true,
-         autohide: { 
-            minimize: true, 
-            restored: false 
+         autohide: {
+            minimize: true,
+            restored: false
          }
       },
 
@@ -299,7 +299,17 @@
       _onPause: function(e){
          var jb = this;
 
-         if(jb.trackCur){ jb.trackCur.time = e.jPlayer.status.currentTime; }
+         if(jb.trackCur){
+            // If playback is ended
+            if(e.jPlayer.status.ended){
+               jb.trackCur.time = 0;
+
+            // Otherwise, if playback is not ended
+            } else {
+               // Store playback position
+               jb.trackCur.time = e.jPlayer.status.currentTime;
+            }
+         }
 
          var track = e.jPlayer.status.media.track;
          track.btn.removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
