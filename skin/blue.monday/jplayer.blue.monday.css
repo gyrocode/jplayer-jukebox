@@ -734,14 +734,15 @@ div.jp-jukebox .jp-playlist {
 .jp-pos-float-bl .jp-visibility-toggle {
   display:block;
   position:absolute;
-  right:-22px;
+  right:-20px;
   width:20px;
-  height:100%;
   top:-1px;
+  bottom:-1px;
   background-color:#CCC;
   border-radius: 0 4px 4px 0;
   cursor:pointer;
   border:1px solid #009be3;
+  box-sizing:border-box;
 }
 
 .jp-visibility-toggle .jp-visibility-toggle-arrow {
