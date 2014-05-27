@@ -6,9 +6,9 @@
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/MIT
  *
- * Author: Michael Ryvkin (http://wwww.ponticstar.com/projects/jplayer-jukebox)
+ * Author: Michael Ryvkin (http://www.gyrocode.com/projects/jplayer-jukebox)
  * Version: 0.3
- * Date: 3/15/2014
+ * Date: 5/26/2014
  */
 
 (function($, undefined){
@@ -31,6 +31,14 @@
       );
 
       this.trackCur = null;
+      this.typesSupported = {
+         'mp3':'mp3',
+         'm4a':'m4a',
+         'oga':'oga,ogg',
+         'fla':'fla,flac',
+         'wav':'wav',
+         'webma':'webma,weba'
+      };
 
       this.p.bind($.jPlayer.event.ready,  function(e){ jb._onReady(e);  });
       this.p.bind($.jPlayer.event.play,   function(e){ jb._onPlay(e);   });
@@ -50,9 +58,9 @@
          smoothPlayBar: true,
          keyEnabled: true,
          audioFullScreen: true,
-         autohide: {
-            minimize: true,
-            restored: false
+         autohide: { 
+            minimize: true, 
+            restored: false 
          }
       },
 
@@ -143,9 +151,18 @@
             index = str.lastIndexOf(".");
             if((!is_proto_avail || is_file_avail) && index != -1){
                var extension = str.substring(index + 1, str.length).toLowerCase();
+  
+               for(var typeSupported in jb.typesSupported){
+                  if(jb.typesSupported.hasOwnProperty(typeSupported)){
+                     if($.inArray(extension, jb.typesSupported[typeSupported].split(',')) != -1){
+                        type = typeSupported;
+                        break;
+                     }
+                  }
+               }
 
-               if (extension.match(/[a-zA-Z]/) && extension === jb.options.supplied) {
-                  type = extension;
+               if($.inArray(type, jb.options.supplied.split(',')) == -1){
+                  type = null;
                }
             }
 
@@ -197,7 +214,7 @@
                track: track
             };
 
-            playlistEntry[jb.options.supplied] = track.el.attr('href');
+            playlistEntry[track.type] = track.el.attr('href');
             jb.pl.add(playlistEntry);
 
             track.el.before(track.btn);
