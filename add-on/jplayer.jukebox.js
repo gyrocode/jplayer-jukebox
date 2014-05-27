@@ -300,14 +300,10 @@
          var jb = this;
 
          if(jb.trackCur){
-            // If playback is ended
-            if(e.jPlayer.status.ended){
-               jb.trackCur.time = 0;
-
-            // Otherwise, if playback is not ended
+            if(!e.jPlayer.status.ended){
+               jb.trackCur.time = e.jPlayer.status.currentTime; 
             } else {
-               // Store playback position
-               jb.trackCur.time = e.jPlayer.status.currentTime;
+               jb.trackCur.time = 0;
             }
          }
 
