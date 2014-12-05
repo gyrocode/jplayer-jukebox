@@ -69,7 +69,7 @@
          var jb = this;
 
          var html =
-            '<div id="' + jb.id + '_container" class="jp-video jp-jukebox jp-pos-float-bl">'
+            '<div id="' + jb.id + '_container" class="jp-video jp-jukebox jp-pos-float-bl" style="visibility:hidden">'
             + '   <div class="jp-type-playlist">'
             + '      <div class="jp-playlist"><ul><li></li></ul></div>'
             + '      <div class="jp-no-solution">'
@@ -279,6 +279,7 @@
             });
          });
 
+         $('#' + jb.id + '_container').css('visibility', 'visible');
          jb.setVisibility(!jb.options.autohide.minimize, 0);
          $('.jp-visibility-toggle').click(function(e){
             var $btn = $(this);
