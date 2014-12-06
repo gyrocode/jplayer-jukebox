@@ -123,15 +123,32 @@
          $('body').append(html);
       },
 
-      // Gets media type from file extension
-      _getTypeFromExtension: function (url) {
+      // Gets filename from URL
+      _getFilenameFromUrl: function (url) {
+         var fn = url;
+
+         index = fn.indexOf('?');
+         if(index != -1){
+            fn = fn.substring(0, index);
+         }
+
+         index = fn.lastIndexOf("/");
+         if(index != -1){
+            fn = fn.substring(index + 1);
+         }
+
+         return fn;
+      },
+
+      // Gets media type from URL
+      _getTypeFromUrl: function (url) {
          var jb = this;
 
          var type = null;
          try {
             var str = url;
 
-            var index = str.indexOf("://");
+            var index = str.indexOf('://');
             var is_proto_avail = false;
             if(index != -1){
                is_proto_avail = true;
@@ -143,14 +160,14 @@
                str = str.substring(0, index);
             }
 
-            index = str.indexOf("/");
+            index = str.lastIndexOf('/');
             var is_file_avail = false;
             if(index != -1){
                is_file_avail = true;
                str = str.substring(index + 1);
             }
 
-            index = str.lastIndexOf(".");
+            index = str.lastIndexOf('.');
             if((!is_proto_avail || is_file_avail) && index != -1){
                var extension = str.substring(index + 1, str.length).toLowerCase();
   
@@ -185,7 +202,7 @@
          $.each($('a'), function(index, el){
             var $el = $(el);
             if($el.hasClass('jp-media')){
-               var type = jb._getTypeFromExtension($el.attr('href'));
+               var type = jb._getTypeFromUrl($el.attr('href'));
                if(type){
                   mediaTracks.push({ el: $el, type: type, id: mediaTracks.length, time: 0 });
                }
@@ -195,7 +212,7 @@
          if(!mediaTracks.length){
             $.each($('a'), function(index, el){
                var $el = $(el);
-               var type = jb._getTypeFromExtension($el.attr('href'));
+               var type = jb._getTypeFromUrl($el.attr('href'));
                if(type){
                   mediaTracks.push({ el: $el, type: type, id: mediaTracks.length, time: 0 });
                }
@@ -211,7 +228,7 @@
             });
 
             var playlistEntry = {
-               title:(track.el.attr('title')) ? track.el.attr('title') : track.el.attr('href'),
+               title:(track.el.attr('title')) ? track.el.attr('title') : jb._getFilenameFromUrl(track.el.attr('href')),
                artist:(track.el.data('artist')) ? track.el.data('artist') : "",
                track: track
             };
