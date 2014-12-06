@@ -20,6 +20,7 @@
 
       this._construct();
 
+      this.j = $('#' + jb.id + '_container');
       this.p = $('#' + jb.id);
 
 
@@ -61,7 +62,8 @@
          autohide: { 
             minimize: true, 
             restored: false 
-         }
+         },
+         useStateClassSkin: true
       },
 
       // Builds media player on the page
@@ -69,54 +71,54 @@
          var jb = this;
 
          var html =
-            '<div id="' + jb.id + '_container" class="jp-video jp-jukebox jp-pos-float-bl" style="visibility:hidden">'
-            + '   <div class="jp-type-playlist">'
-            + '      <div class="jp-playlist"><ul><li></li></ul></div>'
-            + '      <div class="jp-no-solution">'
-            + '         <span>Update Required</span>'
-            + '         To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.'
-            + '      </div>'
-            + '      <div id="' + jb.id + '" class="jp-jplayer"></div>'
-            + '      <div class="jp-gui">'
-            + '         <div class="jp-video-play">'
-            + '            <a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a>'
-            + '         </div>'
-            + '         <div class="jp-interface">'
-            + '            <div class="jp-progress">'
-            + '               <div class="jp-seek-bar">'
-            + '                  <div class="jp-play-bar"></div>'
-            + '               </div>'
-            + '            </div>'
-            + '            <div class="jp-current-time"></div>'
-            + '            <div class="jp-duration"></div>'
-            + '            <div class="jp-controls-holder">'
-            + '               <ul class="jp-controls">'
-            + '                  <li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>'
-            + '               </ul>'
-            + '               <div class="jp-volume-bar"><div class="jp-volume-bar-value"></div></div>'
-            + '               <ul class="jp-toggles">'
-            + '                  <li><a href="javascript:;" class="jp-playlist-off" tabindex="1" title="hide playlist">hide playlist</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-playlist-on" tabindex="1" title="show playlist">show playlist</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">full screen</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-restore-screen" tabindex="1" title="restore screen">restore screen</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>'
-            + '                  <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>'
-            + '               </ul>'
-            + '            </div>'
-            + '            <div class="jp-title"><ul><li></li></ul></div>'
-            + '            <div class="jp-visibility-toggle jp-visibility-toggle-on"><div class="jp-visibility-toggle-arrow"></div></div>'
-            + '         </div>'
-            + '      </div>'
+            '<div id="' + jb.id + '_container" class="jp-video jp-jukebox jp-pos-float-bl" style="visibility:hidden" role="application" aria-label="media player">'
+            + '<div class="jp-type-playlist">'
+            + '<div class="jp-playlist"><ul><li></li></ul></div>'
+            + '<div id="' + jb.id + '" class="jp-jplayer"></div>'
+            + '<div class="jp-gui">'
+            + '   <div class="jp-video-play">'
+            + '      <button class="jp-video-play-icon" role="button" tabindex="0">play</button>'
             + '   </div>'
+            + '   <div class="jp-interface">'
+            + '      <div class="jp-progress">'
+            + '         <div class="jp-seek-bar">'
+            + '            <div class="jp-play-bar"></div>'
+            + '         </div>'
+            + '      </div>'
+            + '      <div class="jp-current-time" role="timer" aria-label="time"></div>'
+            + '      <div class="jp-duration" role="timer" aria-label="duration"></div>'
+            + '      <div class="jp-controls-holder">'
+            + '         <div class="jp-controls">'
+            + '            <button class="jp-previous" role="button" tabindex="0">previous</button>'
+            + '            <button class="jp-play" role="button" tabindex="0">play</button>'
+            + '            <button class="jp-stop" role="button" tabindex="0">stop</button>'
+            + '            <button class="jp-next" role="button" tabindex="0">next</button>'
+            + '         </div>'
+            + '         <div class="jp-volume-controls">'
+            + '            <button class="jp-mute" role="button" tabindex="0">mute</button>'
+            + '            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>'
+            + '            <div class="jp-volume-bar">'
+            + '               <div class="jp-volume-bar-value"></div>'
+            + '            </div>'
+            + '         </div>'
+            + '         <div class="jp-toggles">'
+            + '            <button class="jp-repeat" role="button" tabindex="0">repeat</button>'
+            + '            <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>'
+            + '            <button class="jp-full-screen" role="button" tabindex="0">full screen</button>'
+            + '            <button class="jp-show-playlist" role="button" tabindex="0">playlist</button>'
+            + '         </div>'
+            + '      </div>'
+            + '      <div class="jp-details">'
+            + '         <div class="jp-title" aria-label="title"></div>'
+            + '      </div>'
+            + '      <div class="jp-visibility-toggle jp-visibility-toggle-on"><div class="jp-visibility-toggle-arrow"></div></div>'
+            + '   </div>'
+            + '</div>'
+            + '<div class="jp-no-solution">'
+            + '   <span>Update Required</span>'
+            + '   To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.'
+            + '</div>'
+            + '</div>'
             + '</div>';
          $('body').append(html);
       },
@@ -264,19 +266,15 @@
             });
          });
 
-         $('.jp-playlist-off').hide();
          $('.jp-playlist').slideUp(0);
-         $('.jp-playlist-on').click(function(e){
-            $('.jp-playlist').slideDown(400, function(){
-               $('.jp-playlist-off').show();
-               $('.jp-playlist-on').hide();
-            });
-         });
-         $('.jp-playlist-off').click(function(e){
-            $('.jp-playlist').slideUp(400, function(){
-               $('.jp-playlist-on').show();
-               $('.jp-playlist-off').hide();
-            });
+         $('.jp-show-playlist').click(function(e){
+            if(jb.j.hasClass('jp-state-playlist')){
+               jb.j.removeClass('jp-state-playlist');
+               $('.jp-playlist').slideUp(400);
+            } else {
+               jb.j.addClass('jp-state-playlist');
+               $('.jp-playlist').slideDown(400);
+            }
          });
 
          $('#' + jb.id + '_container').css('visibility', 'visible');
