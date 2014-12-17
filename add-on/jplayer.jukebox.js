@@ -253,10 +253,7 @@
             track = mediaTracks[i];
             track.btn = $('<span />', { 'class': 'jp-page-btn-play', 'text': 'Play' });
 
-            track.btn.click(function(e){
-               $(this).next('.jp-page-link').click();
-               e.preventDefault();
-            });
+            track.btn.click({ track: track }, function(e){ jb._onClick(e); });
 
             var playlistEntry = {
                title:(track.el.attr('title')) ? track.el.attr('title') : jb._getFilenameFromUrl(track.el.attr('href')),
@@ -270,57 +267,61 @@
             track.el.before(track.btn);
             track.el.addClass('jp-page-link');
 
-            track.el.click({ track: track }, function(e){
-               var track = e.data.track;
+            track.el.click({ track: track }, function(e){ jb._onClick(e); });
+         }
+      },
 
-               if(track.btn.hasClass('jp-page-btn-pause')){
-                  jb.p.jPlayer("pause");
+      // Handles mouse click event on media link
+      _onClick: function(e){
+         var jb = this;
+         var track = e.data.track;
+
+         if(track.btn.hasClass('jp-page-btn-pause')){
+            jb.p.jPlayer("pause");
+
+         } else {
+            var isTrackFound = false;
+
+            // Determine player position
+            var playTime = 0;
+            if(jb.trackCur){
+               if(track.id == jb.trackCur.id){
+                 playTime = jb.trackCur.time;
+                 isTrackFound = true;
 
                } else {
-                  var isTrackFound = false;
+                 jb.trackCur.time = 0;
+               }
+            }
 
-                  // Determine player position
-                  var playTime = 0;
-                  if(jb.trackCur){
-                     if(track.id == jb.trackCur.id){
-                       playTime = jb.trackCur.time;
-                       isTrackFound = true;
-
-                     } else {
-                       jb.trackCur.time = 0;
-                     }
-                  }
-
-                  // Select track in the playlist
-                  var i;
-                  if(playTime === 0){
-                     for(i = 0; i < jb.pl.playlist.length; i++){
-                        playlistItem = jb.pl.playlist[i];
-                        if(playlistItem.track.id == track.id){
-                           jb.pl.select(i);
-                           isTrackFound = true;
-                           break;
-                        }
-                     }
-                  }
-
-                  // If item exists in the playlist
-                  if(isTrackFound){
-                     jb.p.jPlayer('play', playTime);
-
-                  // Otherwise, if item doesn't exist in the playlist
-                  } else {
-                     var media = { track: track };
-                     media[jb.options.supplied] = $(this).attr('href');
-
-                     jb.p.jPlayer('setMedia', media);
-                     jb.p.jPlayer('play', playTime);
+            // Select track in the playlist
+            var i;
+            if(playTime === 0){
+               for(i = 0; i < jb.pl.playlist.length; i++){
+                  playlistItem = jb.pl.playlist[i];
+                  if(playlistItem.track.id == track.id){
+                     jb.pl.select(i);
+                     isTrackFound = true;
+                     break;
                   }
                }
+            }
 
-               e.preventDefault();
-            });
+            // If item exists in the playlist
+            if(isTrackFound){
+               jb.p.jPlayer('play', playTime);
+
+            // Otherwise, if item doesn't exist in the playlist
+            } else {
+               var media = { track: track };
+               media[jb.options.supplied] = $(this).attr('href');
+
+               jb.p.jPlayer('setMedia', media);
+               jb.p.jPlayer('play', playTime);
+            }
          }
+
+         e.preventDefault();
       },
 
       setVisibility: function(state, speed){
