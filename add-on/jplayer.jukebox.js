@@ -277,31 +277,35 @@
                   jb.p.jPlayer("pause");
 
                } else {
+                  var isTrackFound = false;
+
+                  // Determine player position
                   var playTime = 0;
                   if(jb.trackCur){
                      if(track.id == jb.trackCur.id){
                        playTime = jb.trackCur.time;
+                       isTrackFound = true;
+
                      } else {
                        jb.trackCur.time = 0;
                      }
                   }
 
-                  // Determine item index in the playlist and select it
-                  var playlistItemSelected = -1;
+                  // Select track in the playlist
                   var i;
                   if(playTime === 0){
                      for(i = 0; i < jb.pl.playlist.length; i++){
                         playlistItem = jb.pl.playlist[i];
                         if(playlistItem.track.id == track.id){
                            jb.pl.select(i);
-                           playlistItemSelected = i;
+                           isTrackFound = true;
                            break;
                         }
                      }
                   }
 
                   // If item exists in the playlist
-                  if(playlistItemSelected != -1){
+                  if(isTrackFound){
                      jb.p.jPlayer('play', playTime);
 
                   // Otherwise, if item doesn't exist in the playlist
