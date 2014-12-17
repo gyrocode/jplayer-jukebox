@@ -59,9 +59,9 @@
          smoothPlayBar: true,
          keyEnabled: true,
          audioFullScreen: true,
-         autohide: { 
-            minimize: true, 
-            restored: false 
+         autohide: {
+            minimize: true,
+            restored: false
          },
          useStateClassSkin: true
       },
@@ -170,7 +170,7 @@
             index = str.lastIndexOf('.');
             if((!is_proto_avail || is_file_avail) && index != -1){
                var extension = str.substring(index + 1, str.length).toLowerCase();
-  
+
                for(var typeSupported in jb.typesSupported){
                   if(jb.typesSupported.hasOwnProperty(typeSupported)){
                      if($.inArray(extension, jb.typesSupported[typeSupported].split(',')) != -1){
@@ -196,30 +196,61 @@
       _onReady: function(e){
          var jb = this;
 
-         var anchors = $('a');
-
-         var mediaTracks = [];
-         $.each($('a'), function(index, el){
-            var $el = $(el);
-            if($el.hasClass('jp-media')){
-               var type = jb._getTypeFromUrl($el.attr('href'));
-               if(type){
-                  mediaTracks.push({ el: $el, type: type, id: mediaTracks.length, time: 0 });
-               }
+         $('.jp-playlist').slideUp(0);
+         $('.jp-show-playlist').click(function(e){
+            if(jb.j.hasClass('jp-state-playlist')){
+               jb.j.removeClass('jp-state-playlist');
+               $('.jp-playlist').slideUp(400);
+            } else {
+               jb.j.addClass('jp-state-playlist');
+               $('.jp-playlist').slideDown(400);
             }
          });
 
-         if(!mediaTracks.length){
-            $.each($('a'), function(index, el){
-               var $el = $(el);
-               var type = jb._getTypeFromUrl($el.attr('href'));
+         $('#' + jb.id + '_container').css('visibility', 'visible');
+         jb.setVisibility(!jb.options.autohide.minimize, 0);
+         $('.jp-visibility-toggle').click(function(e){
+            var $btn = $(this);
+            jb.setVisibility(($btn.hasClass('jp-visibility-toggle-off')), 400);
+         });
+
+         this.parsePage();
+      },
+
+      // Parses page and adds media links to the playlist
+      parsePage: function(e){
+         var jb = this;
+
+         // List of links that haven't been processed
+         var anchors = $('a').not('.jp-page-link');
+
+         var mediaTracks = [];
+         var idFirst = jb.pl.playlist.length;
+
+         var i, $el, type;
+
+         for(i = 0; i < anchors.length; i++){
+            $el = $(anchors[i]);
+            if($el.hasClass('jp-media')){
+               type = jb._getTypeFromUrl($el.attr('href'));
                if(type){
-                  mediaTracks.push({ el: $el, type: type, id: mediaTracks.length, time: 0 });
+                  mediaTracks.push({ el: $el, type: type, id: idFirst + mediaTracks.length, time: 0 });
                }
-            });
+            }
          }
 
-         $.each(mediaTracks, function(index, track){
+         if(!mediaTracks.length){
+            for(i = 0; i < anchors.length; i++){
+               $el = $(anchors[i]);
+               type = jb._getTypeFromUrl($el.attr('href'));
+               if(type){
+                  mediaTracks.push({ el: $el, type: type, id: idFirst + mediaTracks.length, time: 0 });
+               }
+            }
+         }
+
+         for(i = 0; i < mediaTracks.length; i++){
+            track = mediaTracks[i];
             track.btn = $('<span />', { 'class': 'jp-page-btn-play', 'text': 'Play' });
 
             track.btn.click(function(e){
@@ -239,7 +270,9 @@
             track.el.before(track.btn);
             track.el.addClass('jp-page-link');
 
-            track.el.click(function(e){
+            track.el.click({ track: track }, function(e){
+               var track = e.data.track;
+
                if(track.btn.hasClass('jp-page-btn-pause')){
                   jb.p.jPlayer("pause");
 
@@ -255,14 +288,16 @@
 
                   // Determine item index in the playlist and select it
                   var playlistItemSelected = -1;
+                  var i;
                   if(playTime === 0){
-                     $.each(jb.pl.playlist, function(index, playlistItem){
+                     for(i = 0; i < jb.pl.playlist.length; i++){
+                        playlistItem = jb.pl.playlist[i];
                         if(playlistItem.track.id == track.id){
-                           jb.pl.select(index);
-                           playlistItemSelected = index;
-                           return false;
+                           jb.pl.select(i);
+                           playlistItemSelected = i;
+                           break;
                         }
-                     });
+                     }
                   }
 
                   // If item exists in the playlist
@@ -281,25 +316,7 @@
 
                e.preventDefault();
             });
-         });
-
-         $('.jp-playlist').slideUp(0);
-         $('.jp-show-playlist').click(function(e){
-            if(jb.j.hasClass('jp-state-playlist')){
-               jb.j.removeClass('jp-state-playlist');
-               $('.jp-playlist').slideUp(400);
-            } else {
-               jb.j.addClass('jp-state-playlist');
-               $('.jp-playlist').slideDown(400);
-            }
-         });
-
-         $('#' + jb.id + '_container').css('visibility', 'visible');
-         jb.setVisibility(!jb.options.autohide.minimize, 0);
-         $('.jp-visibility-toggle').click(function(e){
-            var $btn = $(this);
-            jb.setVisibility(($btn.hasClass('jp-visibility-toggle-off')), 400);
-         });
+         }
       },
 
       setVisibility: function(state, speed){
@@ -334,7 +351,7 @@
 
          if(jb.trackCur){
             if(!e.jPlayer.status.ended){
-               jb.trackCur.time = e.jPlayer.status.currentTime; 
+               jb.trackCur.time = e.jPlayer.status.currentTime;
             } else {
                jb.trackCur.time = 0;
             }
