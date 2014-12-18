@@ -306,15 +306,15 @@
                   }
                }
             }
-
+            
             // If item exists in the playlist
             if(isTrackFound){
                jb.p.jPlayer('play', playTime);
 
-            // Otherwise, if item doesn't exist in the playlist
+            // Otherwise, if item doesn't exist in the playlist (removed by user)
             } else {
                var media = { track: track };
-               media[jb.options.supplied] = $(this).attr('href');
+               media[track.type] = track.el.attr('href');
 
                jb.p.jPlayer('setMedia', media);
                jb.p.jPlayer('play', playTime);
