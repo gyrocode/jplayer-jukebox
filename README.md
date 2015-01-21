@@ -7,7 +7,7 @@ jPlayer Jukebox is add-on to jPlayer that allows to play media files on the page
 Installation
 ------------
 
-1. Follow instructions in jPlayer Quick Start Guide on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example `/js/jplayer`.
+1. Follow instructions in [jPlayer Quick Start Guide](http://jplayer.org/latest/quick-start-guide) on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example `/js/jplayer`.
 
 2. Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.
 
@@ -17,10 +17,10 @@ Installation
 
     ```
     <!-- jQuery -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <!-- jPlayer -->
-    <link type="text/css" href="/js/jplayer/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" />
+    <link type="text/css" href="/js/jplayer/skin/blue.monday/jplayer.blue.monday.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/js/jplayer/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="/js/jplayer/add-on/jplayer.playlist.min.js"></script>
     <script type="text/javascript" src="/js/jplayer/add-on/jplayer.jukebox.min.js"></script>
@@ -29,7 +29,8 @@ Installation
        // Initialize jPlayerJukebox
        jQuery(document).ready(function(){
           var jpjb = new jPlayerJukebox({
-             swfPath: '/js/jplayer'
+             swfPath: '/js/jplayer', 
+             supplied: 'mp3,oga,wav,fla,webma'
           });
        });
     </script>
