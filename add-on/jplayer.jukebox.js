@@ -2,13 +2,13 @@
  * Jukebox Object for the jPlayer Plugin
  * http://www.gyrocode.com/projects/jplayer-jukebox
  *
- * Copyright (c) 2014 Gyrocode
+ * Copyright (c) Gyrocode
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/MIT
  *
  * Author: Michael Ryvkin (http://www.gyrocode.com/projects/jplayer-jukebox)
- * Version: 0.3
- * Date: 5/26/2014
+ * Version: 0.4
+ * Date: 2/3/2015
  */
 
 (function($, undefined){
@@ -17,6 +17,14 @@
       this.id = 'jplayer_jukebox';
 
       this.options = $.extend({}, this._options, options);
+
+      // Validate options parameters
+      if( jb.options.jukeboxOptions.layout !== 'float-bl'
+          && jb.options.jukeboxOptions.layout !== 'fixed-t'
+          && jb.options.jukeboxOptions.layout !== 'fixed-b' )
+      {
+         jb.options.jukeboxOptions.layout = this._options.jukeboxOptions.layout;
+      }
 
       this._construct();
 
@@ -51,6 +59,7 @@
       // Default options
       _options: {
          jukeboxOptions: {
+            layout: "float-bl"
          },
          playlistOptions: {
             enableRemoveControls: true
@@ -58,7 +67,7 @@
          supplied: 'mp3',
          smoothPlayBar: true,
          keyEnabled: true,
-         audioFullScreen: true,
+         audioFullScreen: false,
          autohide: {
             minimize: true,
             restored: false
@@ -71,14 +80,11 @@
          var jb = this;
 
          var html =
-            '<div id="' + jb.id + '_container" class="jp-video jp-jukebox jp-pos-float-bl" style="visibility:hidden" role="application" aria-label="media player">'
+            '<div id="' + jb.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
             + '<div class="jp-type-playlist">'
             + '<div class="jp-playlist"><ul><li></li></ul></div>'
             + '<div id="' + jb.id + '" class="jp-jplayer"></div>'
             + '<div class="jp-gui">'
-            + '   <div class="jp-video-play">'
-            + '      <button class="jp-video-play-icon" role="button" tabindex="0">play</button>'
-            + '   </div>'
             + '   <div class="jp-interface">'
             + '      <div class="jp-progress">'
             + '         <div class="jp-seek-bar">'
@@ -89,29 +95,29 @@
             + '      <div class="jp-duration" role="timer" aria-label="duration"></div>'
             + '      <div class="jp-controls-holder">'
             + '         <div class="jp-controls">'
-            + '            <button class="jp-previous" role="button" tabindex="0">previous</button>'
-            + '            <button class="jp-play" role="button" tabindex="0">play</button>'
+            + '            <button class="jp-previous" role="button" tabindex="0" title="Previous track">previous</button>'
+            + '            <button class="jp-play" role="button" tabindex="0" title="Play">play</button>'
             + '            <button class="jp-stop" role="button" tabindex="0">stop</button>'
-            + '            <button class="jp-next" role="button" tabindex="0">next</button>'
+            + '            <button class="jp-next" role="button" tabindex="0" title="Next track">next</button>'
             + '         </div>'
             + '         <div class="jp-volume-controls">'
-            + '            <button class="jp-mute" role="button" tabindex="0">mute</button>'
-            + '            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>'
+            + '            <button class="jp-mute" role="button" tabindex="0" title="Mute">mute</button>'
+            + '            <button class="jp-volume-max" role="button" tabindex="0" title="Max volume">max volume</button>'
             + '            <div class="jp-volume-bar">'
             + '               <div class="jp-volume-bar-value"></div>'
             + '            </div>'
             + '         </div>'
             + '         <div class="jp-toggles">'
-            + '            <button class="jp-repeat" role="button" tabindex="0">repeat</button>'
-            + '            <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>'
-            + '            <button class="jp-full-screen" role="button" tabindex="0">full screen</button>'
-            + '            <button class="jp-show-playlist" role="button" tabindex="0">playlist</button>'
+            + '            <button class="jp-repeat" role="button" tabindex="0" title="Repeat all">repeat</button>'
+            + '            <button class="jp-shuffle" role="button" tabindex="0" title="Shuffle">shuffle</button>'
+            + '            <button class="jp-full-screen" role="button" tabindex="0" title="Full screen">full screen</button>'
+            + '            <button class="jp-show-playlist" role="button" tabindex="0" title="Playlist">playlist</button>'
             + '         </div>'
             + '      </div>'
             + '      <div class="jp-details">'
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
-            + '      <div class="jp-visibility-toggle jp-visibility-toggle-on"><div class="jp-visibility-toggle-arrow"></div></div>'
+            + '      <div class="jp-visibility-control"><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
             + '<div class="jp-no-solution">'
@@ -207,12 +213,20 @@
             }
          });
 
-         $('#' + jb.id + '_container').css('visibility', 'visible');
-         jb.setVisibility(!jb.options.autohide.minimize, 0);
-         $('.jp-visibility-toggle').click(function(e){
-            var $btn = $(this);
-            jb.setVisibility(($btn.hasClass('jp-visibility-toggle-off')), 400);
-         });
+         $('#' + jb.id + '_container')
+            .css('visibility', 'visible')
+            .addClass('jp-pos-' + jb.options.jukeboxOptions.layout);
+
+         if(jb.options.jukeboxOptions.layout === 'float-bl'){
+            jb.setVisibility(!jb.options.autohide.minimize, 0);
+            $('.jp-visibility-toggle').click(function(e){
+               var $btn = $(this);
+               jb.setVisibility(($('#' + jb.id + '_container').hasClass('jp-visibility-off')), 400);
+            });
+         }
+
+         // Force visibility of details pane 
+         $('.jp-details').show();
 
          this.parsePage();
       },
@@ -251,7 +265,7 @@
 
          for(i = 0; i < mediaTracks.length; i++){
             track = mediaTracks[i];
-            track.btn = $('<span />', { 'class': 'jp-page-btn-play', 'text': 'Play' });
+            track.btn = $('<span />', { 'class': 'jp-page-btn-play' });
 
             track.btn.click({ track: track }, function(e){ jb._onClick(e); });
 
@@ -328,12 +342,12 @@
          var jb = this;
          if(state){
             $('#' + jb.id + '_container').finish().animate({ left: '0' }, speed, function(){
-               $('.jp-visibility-toggle').addClass('jp-visibility-toggle-on').removeClass('jp-visibility-toggle-off');
+               $(this).addClass('jp-visibility-on').removeClass('jp-visibility-off');
             });
          } else {
             var width = $('#' + jb.id + '_container').outerWidth();
             $('#' + jb.id + '_container').finish().animate({ left: '-' + (width+1) + 'px' }, speed, function(){
-               $('.jp-visibility-toggle').addClass('jp-visibility-toggle-off').removeClass('jp-visibility-toggle-on');
+               $(this).addClass('jp-visibility-off').removeClass('jp-visibility-on');
             });
          }
       },
