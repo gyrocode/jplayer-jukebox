@@ -50,7 +50,7 @@ Options specific to jPlayer Jukebox add-on can be specified using `jukeboxOption
 
 **layout**
 
-String : (Default: "float-bl") Layout name. Available layouts are:
+String : (Default: "float-bl") : Layout name. Available layouts are:
    * `float-bl` (Floating appearance, bottom-left alignment)
    * `fixed-t` (Fixed appearance, top alignment)
    * `fixed-b` (Fixed appearance, bottom alignment)
