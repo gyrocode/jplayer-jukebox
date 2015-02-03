@@ -65,30 +65,52 @@ Support for formats other than MP3 may not be available on all platforms.
 <a href="media/ogg.ogg" title="" data-artist="Lucas Gonze">.OGG file</a>
 </p>
 
-<h2>Installation</h2>
+<h3>Third-party hosted</h3>
 
-<ol>
+<ol class="task-list">
 <li>
-<p>
-Follow instructions in <a href="http://jplayer.org/latest/quick-start-guide">jPlayer Quick Start Guide</a> on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example <code>/js/jplayer</code>.
-</p>
+<p>Include the following lines in HTML page right before <code>&lt;/head&gt;</code> tag.</p>
+
+<pre><code>&lt;!-- jQuery --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- jPlayer --&gt;
+&lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.4/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
+&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jquery.jplayer.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.playlist.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+   // Initialize jPlayerJukebox
+   jQuery(document).ready(function(){
+      var jpjb = new jPlayerJukebox({
+         swfPath: 'http://gyrocode.github.io/jplayer-jukebox/0.4/', 
+         supplied: 'mp3,oga,wav',
+         jukeboxOptions: {
+            layout: 'float-bl'
+         }
+      });
+   });
+&lt;/script&gt;
+</code></pre>
+
+<p>If you are already using jQuery on your page, you can skip the line that includes it above.</p>
 </li>
+</ol>
 
+<h3>Self-hosted</h3>
+
+<ol class="task-list">
+<li><p>Follow instructions in <a href="http://jplayer.org/latest/quick-start-guide">jPlayer Quick Start Guide</a> on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example <code>/js/jplayer</code>.</p></li>
 <li>
-<p>
-Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.
-</p>
-<p>
-For example, if you have uploaded jPlayer into <code>/js/jplayer</code> folder, then the add-on should be placed in <code>/js/jplayer/add-on</code> folder and modified Blue Monday skin &#8211; in <code>/js/jplayer/skin</code> folder.
-</p>
+<p>Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.</p>
+
+<p>For example, if you have uploaded jPlayer into <code>/js/jplayer</code> folder, then the add-on should be placed in <code>/js/jplayer/add-on</code> folder and modified Blue Monday skin – in <code>/js/jplayer/skin</code> folder.</p>
 </li>
-
 <li>
-<p>
-Include the following lines in HTML page right before <code>&lt;/head&gt;</code> tag if you haven&#8217;t done so already.
-</p>
+<p>Include the following lines in HTML page right before <code>&lt;/head&gt;</code> tag if you haven’t done so already.</p>
 
-<pre><code class="language-markup">&lt;!-- jQuery --&gt;
+<pre><code>&lt;!-- jQuery --&gt;
 &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
 
 &lt;!-- jPlayer --&gt;
@@ -101,8 +123,8 @@ Include the following lines in HTML page right before <code>&lt;/head&gt;</code>
    // Initialize jPlayerJukebox
    jQuery(document).ready(function(){
       var jpjb = new jPlayerJukebox({
-         swfPath: '/js/jplayer',
-         supplied: 'mp3,oga,wav,fla,webma',
+         swfPath: '/js/jplayer', 
+         supplied: 'mp3,oga,wav',
          jukeboxOptions: {
             layout: 'float-bl'
          }
@@ -112,6 +134,7 @@ Include the following lines in HTML page right before <code>&lt;/head&gt;</code>
 </code></pre>
 
 <p>If you have uploaded jPlayer into folder other than <code>/js/jplayer</code> folder, please modify the code accordingly.</p>
+
 <p>If you are already using jQuery on your page, you can skip the line that includes it above.</p>
 </li>
 </ol>
