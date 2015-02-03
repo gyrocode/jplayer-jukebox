@@ -22,7 +22,10 @@
    $(document).ready(function(){
       var jpjb = new jPlayerJukebox({
          swfPath: 'jplayer',
-         supplied: 'mp3,oga,wav,fla,webma'
+         supplied: 'mp3,oga,wav,fla,webma',
+         jukeboxOptions: {
+            layout: 'float-bl'
+         }
       });
    });
 })(jQuery);
@@ -99,7 +102,10 @@ Include the following lines in HTML page right before <code>&lt;/head&gt;</code>
    jQuery(document).ready(function(){
       var jpjb = new jPlayerJukebox({
          swfPath: '/js/jplayer',
-         supplied: 'mp3,oga,wav,fla,webma'
+         supplied: 'mp3,oga,wav,fla,webma',
+         jukeboxOptions: {
+            layout: 'float-bl'
+         }
       });
    });
 &lt;/script&gt;
@@ -109,6 +115,23 @@ Include the following lines in HTML page right before <code>&lt;/head&gt;</code>
 <p>If you are already using jQuery on your page, you can skip the line that includes it above.</p>
 </li>
 </ol>
+
+<h2>Options</h2>
+
+<p>Options specific to jPlayer Jukebox add-on can be specified using <code>jukeboxOptions</code> object.</p>
+
+<p><strong>layout</strong></p>
+
+<p>String : (Default: "float-bl") : Layout name. Available layouts are:</p>
+
+<ul class="task-list">
+<li>
+<code>float-bl</code> (Floating appearance, bottom-left alignment)</li>
+<li>
+<code>fixed-t</code> (Fixed appearance, top alignment)</li>
+<li>
+<code>fixed-b</code> (Fixed appearance, bottom alignment)</li>
+</ul>
 
 <h2>Download</h2>
 
