@@ -7,6 +7,39 @@ jPlayer Jukebox is add-on to jPlayer that allows to play media files on the page
 Installation
 ------------
 
+### Third-party hosted
+
+1. Include the following lines in HTML page right before `</head>` tag.
+
+    ```
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- jPlayer -->
+    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.4/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jquery.jplayer.min.js"></script>
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.min.js"></script>
+
+    <script type="text/javascript">
+       // Initialize jPlayerJukebox
+       jQuery(document).ready(function(){
+          var jpjb = new jPlayerJukebox({
+             swfPath: 'http://gyrocode.github.io/jplayer-jukebox/0.4/', 
+             supplied: 'mp3,oga,wav',
+             jukeboxOptions: {
+                layout: 'float-bl'
+             }
+          });
+       });
+    </script>
+    ```
+
+    If you are already using jQuery on your page, you can skip the line that includes it above.
+
+
+### Self-hosted
+
 1. Follow instructions in [jPlayer Quick Start Guide](http://jplayer.org/latest/quick-start-guide) on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example `/js/jplayer`.
 
 2. Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.
@@ -30,7 +63,7 @@ Installation
        jQuery(document).ready(function(){
           var jpjb = new jPlayerJukebox({
              swfPath: '/js/jplayer', 
-             supplied: 'mp3,oga,wav,fla,webma',
+             supplied: 'mp3,oga,wav',
              jukeboxOptions: {
                 layout: 'float-bl'
              }
