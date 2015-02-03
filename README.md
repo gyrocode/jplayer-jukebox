@@ -44,9 +44,9 @@ Installation
 
 2. Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.
 
-    For example, if you have uploaded jPlayer into `/js/jplayer` folder, then the add-on should be placed in `/js/jplayer/add-on` folder and modified Blue Monday skin – in `/js/jplayer/skin` folder.
+    For example, if you have uploaded jPlayer into `/js/jplayer` folder, then the add-on should be placed in `/js/jplayer/add-on` folder and Uno skin - in `/js/jplayer/skin` folder.
 
-3. Include the following lines in HTML page right before `</head>` tag if you haven’t done so already.
+3. Include the following lines in HTML page right before `</head>` tag if you haven't done so already.
 
     ```
     <!-- jQuery -->
