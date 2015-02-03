@@ -16,21 +16,24 @@
 
 .jp-audio *:focus,
 .jp-audio-stream *:focus,
-.jp-video *:focus {
+.jp-video *:focus,
+.jp-jukebox  *:focus {
    /* Disable the browser focus highlighting. */
    outline:none;
 }
 
 .jp-audio button::-moz-focus-inner,
 .jp-audio-stream button::-moz-focus-inner,
-.jp-video button::-moz-focus-inner {
+.jp-video button::-moz-focus-inner,
+.jp-jukebox button::-moz-focus-inner {
    /* Disable the browser CSS3 focus highlighting. */
    border: 0;
 }
 
 .jp-audio,
 .jp-audio-stream,
-.jp-video {
+.jp-video,
+.jp-jukebox {
 
    font-size:16px;
 
@@ -104,9 +107,6 @@
    height:80px;
 }
 
-.jp-video .jp-interface {
-}
-
 /* @group CONTROLS */
 
 .jp-controls-holder {
@@ -136,16 +136,19 @@
    width:142px;
 }
 
-.jp-video .jp-type-single .jp-controls {
+.jp-video .jp-type-single .jp-controls,
+.jp-jukebox .jp-type-single .jp-controls {
    width: 78px;
    margin-left: 200px;
 }
 
-.jp-video .jp-type-playlist .jp-controls {
+.jp-video .jp-type-playlist .jp-controls,
+.jp-jukebox .jp-type-playlist .jp-controls {
    width: 134px;
    margin-left: 120px;
 }
-.jp-video .jp-controls {
+.jp-video .jp-controls,
+.jp-jukebox .jp-controls {
    float: left;
 }
 
@@ -224,7 +227,8 @@
    left:166px;
    width:130px;
 }
-.jp-video .jp-progress {
+.jp-video .jp-progress,
+.jp-jukebox .jp-progress {
    top:0px;
    left:0px;
    width:100%;
@@ -264,7 +268,8 @@
 .jp-audio-stream .jp-volume-controls {
    left:70px;
 }
-.jp-video .jp-volume-controls {
+.jp-video .jp-volume-controls,
+.jp-jukebox .jp-volume-controls {
    top:12px;
    left:0px;
 }
@@ -357,10 +362,12 @@
    cursor:pointer;
 }
 
-.jp-video .jp-current-time {
+.jp-video .jp-current-time,
+.jp-jukebox .jp-current-time {
    margin-left:20px;
 }
-.jp-video .jp-duration {
+.jp-video .jp-duration,
+.jp-jukebox .jp-duration {
    margin-right:20px;
 }
 
@@ -529,7 +536,8 @@ span.jp-artist {
    top: 50px;
 }
 
-.jp-video .jp-toggles {
+.jp-video .jp-toggles,
+.jp-jukebox .jp-toggles {
    position:absolute;
    right:0;
    margin:11px 0 0 0;
@@ -644,7 +652,7 @@ span.jp-artist {
   overflow-y:auto;
 }
 
-.jp-visibility-toggle {
+.jp-visibility-control {
   display:none;
 }
 
@@ -659,7 +667,7 @@ span.jp-artist {
   border-left:0
 }
 
-.jp-pos-float-bl .jp-visibility-toggle {
+.jp-pos-float-bl .jp-visibility-control {
   display:block;
   position:absolute;
   right:-20px;
@@ -673,21 +681,38 @@ span.jp-artist {
   box-sizing:border-box;
 }
 
-.jp-visibility-toggle .jp-visibility-toggle-arrow {
+.jp-visibility-control .jp-visibility-toggle {
+  display:block;
   position:absolute;
+  overflow:hidden;
+  background-color:transparent;
+  text-indent:-9999px;
+  border:none;
+  cursor:pointer;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+
+.jp-visibility-control .jp-visibility-toggle:before {
+  display:block;
+  position:absolute;
+  overflow:hidden;
+  border:none;
   top:50%;
   width:7px;
   height:14px;
   margin-top:-7px;
   left:5px;
-  cursor:pointer;
+  content:"";
 }
 
-.jp-visibility-toggle-on .jp-visibility-toggle-arrow {
+.jp-visibility-on .jp-visibility-toggle:before {
   background: url("jplayer.blue.monday.png") -86px -29px no-repeat;
 }
 
-.jp-visibility-toggle-off .jp-visibility-toggle-arrow {
+.jp-visibility-off .jp-visibility-toggle:before {
   background: url("jplayer.blue.monday.png") -99px -29px no-repeat;
 }
 
