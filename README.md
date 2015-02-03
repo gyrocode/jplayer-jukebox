@@ -20,7 +20,7 @@ Installation
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <!-- jPlayer -->
-    <link type="text/css" href="/js/jplayer/skin/blue.monday/jplayer.blue.monday.min.css" rel="stylesheet" />
+    <link type="text/css" href="/js/jplayer/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/js/jplayer/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="/js/jplayer/add-on/jplayer.playlist.min.js"></script>
     <script type="text/javascript" src="/js/jplayer/add-on/jplayer.jukebox.min.js"></script>
@@ -30,7 +30,10 @@ Installation
        jQuery(document).ready(function(){
           var jpjb = new jPlayerJukebox({
              swfPath: '/js/jplayer', 
-             supplied: 'mp3,oga,wav,fla,webma'
+             supplied: 'mp3,oga,wav,fla,webma',
+             jukeboxOptions: {
+                layout: 'float-bl'
+             }
           });
        });
     </script>
@@ -39,6 +42,18 @@ Installation
     If you have uploaded jPlayer into folder other than `/js/jplayer` folder, please modify the code accordingly.
 
     If you are already using jQuery on your page, you can skip the line that includes it above.
+
+
+Options
+-------
+Options specific to jPlayer Jukebox add-on can be specified using `jukeboxOptions` object.
+
+**layout**
+
+String : (Default: "float-bl") Layout name. Available layouts are:
+   * `float-bl` (Floating appearance, bottom-left alignment)
+   * `fixed-t` (Fixed appearance, top alignment)
+   * `fixed-b` (Fixed appearance, bottom alignment)
 
 
 Demo
