@@ -117,6 +117,7 @@
             + '      <div class="jp-details">'
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
+            + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
             + '      <div class="jp-visibility-control"><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
@@ -225,7 +226,7 @@
             });
          }
 
-         // Force visibility of details pane 
+         // Force visibility of details pane
          $('.jp-details').show();
 
          this.parsePage();
@@ -320,7 +321,7 @@
                   }
                }
             }
-            
+
             // If item exists in the playlist
             if(isTrackFound){
                jb.p.jPlayer('play', playTime);
