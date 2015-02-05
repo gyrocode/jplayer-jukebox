@@ -17,9 +17,7 @@ Installation
 
     <!-- jPlayer -->
     <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.4/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.playlist.min.js"></script>
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.min.js"></script>
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.bundle.min.js"></script>
 
     <script type="text/javascript">
        // Initialize jPlayerJukebox

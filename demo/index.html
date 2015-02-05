@@ -78,15 +78,13 @@ Support for formats other than MP3 may not be available on all platforms.
 
 &lt;!-- jPlayer --&gt;
 &lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.4/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
-&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jquery.jplayer.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.playlist.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.4/jplayer.jukebox.bundle.min.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript"&gt;
    // Initialize jPlayerJukebox
    jQuery(document).ready(function(){
       var jpjb = new jPlayerJukebox({
-         swfPath: 'http://gyrocode.github.io/jplayer-jukebox/0.4/', 
+         swfPath: 'http://gyrocode.github.io/jplayer-jukebox/0.4/',
          supplied: 'mp3,oga,wav',
          jukeboxOptions: {
             layout: 'float-bl'
@@ -125,7 +123,7 @@ Support for formats other than MP3 may not be available on all platforms.
    // Initialize jPlayerJukebox
    jQuery(document).ready(function(){
       var jpjb = new jPlayerJukebox({
-         swfPath: '/js/jplayer', 
+         swfPath: '/js/jplayer',
          supplied: 'mp3,oga,wav',
          jukeboxOptions: {
             layout: 'float-bl'
