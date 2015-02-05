@@ -59,7 +59,7 @@
 
 .jp-jukebox button::-moz-focus-inner {
   /* Disable the browser CSS3 focus highlighting. */
-  border: 0;
+  border:0;
 }
 
 .jp-jukebox {
@@ -72,7 +72,14 @@
 
 .jp-gui {
   color:#333;
-  background:linear-gradient(#EEE, #AAA);
+  background:#CCC; /* Old browsers */
+  background:-moz-linear-gradient(top, #EEE 0%, #AAA 100%); /* FF3.6+ */
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#EEE), color-stop(100%,#AAA)); /* Chrome,Safari4+ */
+  background:-webkit-linear-gradient(top, #EEE 0%,#AAA 100%); /* Chrome10+,Safari5.1+ */
+  background:-o-linear-gradient(top, #EEE 0%,#AAA 100%); /* Opera 11.10+ */
+  background:-ms-linear-gradient(top, #EEE 0%,#AAA 100%); /* IE10+ */
+  background:linear-gradient(to bottom, #EEE 0%,#AAA 100%); /* W3C */
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEE', endColorstr='#AAA',GradientType=0 ); /* IE6-9 */
 }
 
 .jp-gui button {
@@ -108,7 +115,7 @@
   overflow:hidden;
   clear:both;
   width:100%;
-  height:46px;
+  height:36px;
 }
 
 .jp-interface .jp-controls {
@@ -119,7 +126,7 @@
 
 .jp-jukebox .jp-type-playlist .jp-controls {
   position:absolute;
-  top:5px;
+  top:0;
   left:10px;
   width:108px;
 }
@@ -151,6 +158,25 @@
 
 .jp-controls button.jp-next:before {
   content:"\e606";
+}
+
+.jp-app-bar {
+  font-size:0.68em;
+  padding:0 10px;
+  color:#666;
+  background:#AAA; /* Old browsers */
+  background:-moz-linear-gradient(top, #B9B9B9 0%, #999 100%); /* FF3.6+ */
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#B9B9B9), color-stop(100%,#999)); /* Chrome,Safari4+ */
+  background:-webkit-linear-gradient(top, #B9B9B9 0%,#999 100%); /* Chrome10+,Safari5.1+ */
+  background:-o-linear-gradient(top, #B9B9B9 0%,#999 100%); /* Opera 11.10+ */
+  background:-ms-linear-gradient(top, #B9B9B9 0%,#999 100%); /* IE10+ */
+  background:linear-gradient(to bottom, #B9B9B9 0%,#999 100%); /* W3C */
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#B9B9B9', endColorstr='#999',GradientType=0 ); /* IE6-9 */
+}
+
+.jp-app-bar a {
+  text-decoration:none;
+  color:#666;
 }
 
 /* @end */
@@ -195,7 +221,7 @@
 .jp-volume-controls {
   position:absolute;
   overflow:hidden;
-  top:11px;
+  top:6px;
   right:58px;
   width:24px;
   height:24px;
@@ -234,6 +260,7 @@
 
 .jp-current-time,
 .jp-duration {
+  color:#666;
   position:absolute;
   width:60px;
   font-size:.68em;;
@@ -259,7 +286,7 @@
 .jp-details {
   position:absolute;
   left:128px;
-  top:21px;
+  top:16px;
   height:36px;
   right:92px;
 }
@@ -277,10 +304,10 @@
 .jp-details .jp-title {
   font-size:.75em;
   line-height:36px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  word-break: normal;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  word-break:normal;
 }
 
 .jp-playlist ul {
@@ -307,7 +334,7 @@ div.jp-type-playlist div.jp-playlist li:last-child {
 }
 
 div.jp-type-playlist div.jp-playlist li.jp-playlist-current:before {
-  font-family: "uno";
+  font-family:"uno";
   position:absolute;
   left:10px;
   content:"\e603";
@@ -358,7 +385,7 @@ span.jp-artist {
 .jp-jukebox .jp-toggles {
   position:absolute;
   overflow:hidden;
-  top:11px;
+  top:6px;
   right:10px;
   width:48px;
   height:24px
@@ -448,7 +475,7 @@ span.jp-artist {
 .jp-no-solution {
   padding:5px;
   font-size:.75em;
-  background-color:#eee;
+  background-color:#EEE;
   color:#000;
   display:none;
 }
@@ -485,8 +512,16 @@ span.jp-artist {
   border-radius:0 8px 8px 0;
   cursor:pointer;
   box-sizing:border-box;
-  background:linear-gradient(#EEE, #AAA);
   border-left:2px ridge #EEE;
+
+  background:#CCC; /* Old browsers */
+  background:-moz-linear-gradient(top, #999 0%, #EEE 0%, #b8b8b8 80%, #999 100%); /* FF3.6+ */
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#999), color-stop(0%,#EEE), color-stop(80%,#b8b8b8), color-stop(100%,#999)); /* Chrome,Safari4+ */
+  background:-webkit-linear-gradient(top, #999 0%,#EEE 0%,#b8b8b8 80%,#999 100%); /* Chrome10+,Safari5.1+ */
+  background:-o-linear-gradient(top, #999 0%,#EEE 0%,#b8b8b8 80%,#999 100%); /* Opera 11.10+ */
+  background:-ms-linear-gradient(top, #999 0%,#EEE 0%,#b8b8b8 80%,#999 100%); /* IE10+ */
+  background:linear-gradient(to bottom, #999 0%,#EEE 0%,#b8b8b8 80%,#999 100%); /* W3C */
+  filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#999', endColorstr='#999',GradientType=0 ); /* IE6-9 */
 }
 
 .jp-pos-fixed-b {
