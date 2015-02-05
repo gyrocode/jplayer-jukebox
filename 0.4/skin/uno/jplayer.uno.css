@@ -529,9 +529,6 @@ span.jp-artist {
   position:fixed;
   bottom:0;
   left:0;
-}
-
-.jp-jukebox.jp-pos-fixed-b {
   width:100%;
 }
 
@@ -544,9 +541,6 @@ span.jp-artist {
   position:fixed;
   top:0;
   left:0;
-}
-
-.jp-jukebox.jp-pos-fixed-t {
   width:100%;
 }
 
@@ -578,6 +572,27 @@ span.jp-artist {
 
 .jp-page-btn-pause:before {
   content:"\e60f";
+}
+
+/* @end */
+
+
+/* @group Small screen support */
+
+@media only screen and (max-width: 479px) {
+
+.jp-pos-float-bl {
+  z-index:999;
+  position:fixed;
+  bottom:0;
+  left:0 !important;
+  width:100%;
+}
+
+.jp-pos-float-bl .jp-visibility-control {
+  display:none;
+}
+
 }
 
 /* @end */
