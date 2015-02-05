@@ -1,16 +1,4 @@
-/*!
- * Jukebox Object for the jPlayer Plugin
- * http://www.gyrocode.com/projects/jplayer-jukebox
- *
- * Copyright (c) Gyrocode
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/MIT
- *
- * Author: Michael Ryvkin (http://www.gyrocode.com/projects/jplayer-jukebox)
- * Version: 0.4
- * Date: 2/3/2015
- */
-
+/*! jPlayer Jukebox add-on 0.4 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       var jb = this;
