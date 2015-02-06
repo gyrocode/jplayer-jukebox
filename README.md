@@ -26,7 +26,7 @@ Installation
              swfPath: 'http://gyrocode.github.io/jplayer-jukebox/0.4/', 
              supplied: 'mp3,oga,wav',
              jukeboxOptions: {
-                layout: 'float-bl'
+                position: 'float-bl'
              }
           });
        });
@@ -63,7 +63,7 @@ Installation
              swfPath: '/js/jplayer', 
              supplied: 'mp3,oga,wav',
              jukeboxOptions: {
-                layout: 'float-bl'
+                position: 'float-bl'
              }
           });
        });
@@ -79,9 +79,9 @@ Options
 -------
 Options specific to jPlayer Jukebox add-on can be specified using `jukeboxOptions` object.
 
-**layout**
+**position**
 
-String : (Default: "float-bl") : Layout name. Available layouts are:
+String : (Default: "float-bl") : Position of the player on the page. Available options are:
    * `float-bl` (Floating appearance, bottom-left alignment)
    * `fixed-t` (Fixed appearance, top alignment)
    * `fixed-b` (Fixed appearance, bottom alignment)

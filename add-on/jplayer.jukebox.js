@@ -7,11 +7,11 @@
       this.options = $.extend({}, this._options, options);
 
       // Validate options parameters
-      if( jb.options.jukeboxOptions.layout !== 'float-bl'
-          && jb.options.jukeboxOptions.layout !== 'fixed-t'
-          && jb.options.jukeboxOptions.layout !== 'fixed-b' )
+      if( jb.options.jukeboxOptions.position !== 'float-bl'
+          && jb.options.jukeboxOptions.position !== 'fixed-t'
+          && jb.options.jukeboxOptions.position !== 'fixed-b' )
       {
-         jb.options.jukeboxOptions.layout = this._options.jukeboxOptions.layout;
+         jb.options.jukeboxOptions.position = this._options.jukeboxOptions.position;
       }
 
       this._construct();
@@ -47,7 +47,7 @@
       // Default options
       _options: {
          jukeboxOptions: {
-            layout: "float-bl"
+            position: "float-bl"
          },
          playlistOptions: {
             enableRemoveControls: true
@@ -204,9 +204,9 @@
 
          $('#' + jb.id + '_container')
             .css('visibility', 'visible')
-            .addClass('jp-pos-' + jb.options.jukeboxOptions.layout);
+            .addClass('jp-pos-' + jb.options.jukeboxOptions.position);
 
-         if(jb.options.jukeboxOptions.layout === 'float-bl'){
+         if(jb.options.jukeboxOptions.position === 'float-bl'){
             jb.setVisibility(!jb.options.autohide.minimize, 0);
             $('.jp-visibility-toggle').click(function(e){
                var $btn = $(this);
