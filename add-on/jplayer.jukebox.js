@@ -1,10 +1,13 @@
-/*! jPlayer Jukebox add-on 0.4 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.5.0 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       var jb = this;
       this.id = 'jplayer_jukebox';
 
       this.options = $.extend({}, this._options, options);
+      if(typeof options['jukeboxOptions'] !== 'undefined'){
+         this.options.jukeboxOptions = $.extend({}, this._options.jukeboxOptions, options.jukeboxOptions);
+      }
 
       // Validate options parameters
       if( jb.options.jukeboxOptions.position !== 'float-bl'
@@ -47,7 +50,8 @@
       // Default options
       _options: {
          jukeboxOptions: {
-            position: "float-bl"
+            position: 'float-bl',
+            className: 'ui-gradient'
          },
          playlistOptions: {
             enableRemoveControls: true
@@ -70,9 +74,11 @@
          var html =
             '<div id="' + jb.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
             + '<div class="jp-type-playlist">'
-            + '<div class="jp-playlist"><ul><li></li></ul></div>'
+            + '<div class="jp-playlist"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
             + '<div id="' + jb.id + '" class="jp-jplayer"></div>'
             + '<div class="jp-gui">'
+            + '   <div class="jp-gui-texture"></div>'
+            + '   <div class="jp-gui-gradient"></div>'
             + '   <div class="jp-interface">'
             + '      <div class="jp-progress">'
             + '         <div class="jp-seek-bar">'
@@ -106,7 +112,7 @@
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
             + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
-            + '      <div class="jp-visibility-control"><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
+            + '      <div class="jp-visibility-control"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
             + '<div class="jp-no-solution">'
@@ -204,7 +210,8 @@
 
          $('#' + jb.id + '_container')
             .css('visibility', 'visible')
-            .addClass('jp-pos-' + jb.options.jukeboxOptions.position);
+            .addClass('jp-pos-' + jb.options.jukeboxOptions.position)
+            .addClass(jb.options.jukeboxOptions.className);
 
          if(jb.options.jukeboxOptions.position === 'float-bl'){
             jb.setVisibility(!jb.options.autohide.minimize, 0);
