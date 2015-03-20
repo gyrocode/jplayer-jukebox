@@ -208,7 +208,7 @@
 
          $('#' + jb.id + '_container')
             .css('visibility', 'visible')
-            .addClass('jp-pos-' + jb.options.jukeboxOptions.position)
+            .addClass('pos-' + jb.options.jukeboxOptions.position)
             .addClass(jb.options.jukeboxOptions.className);
 
          if(jb.options.jukeboxOptions.position === 'float-bl'){

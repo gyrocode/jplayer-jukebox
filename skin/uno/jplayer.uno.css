@@ -295,7 +295,7 @@
   color:#333;
 }
 
-.ui-dark.jp-state-muted .jp-mute:before {
+.jp-state-muted.ui-dark .jp-mute:before {
   color:#CCC;
 }
 
@@ -451,7 +451,7 @@
   color:#333;
 }
 
-.ui-dark.jp-state-looped .jp-repeat:before {
+.jp-state-looped.ui-dark .jp-repeat:before {
   color:#CCC;
 }
 
@@ -467,7 +467,7 @@
   color:#333;
 }
 
-.ui-dark.jp-state-playlist .jp-show-playlist:before {
+.jp-state-playlist.ui-dark .jp-show-playlist:before {
   color:#CCC;
 }
 
@@ -543,14 +543,14 @@
 
 /* @group LAYOUT */
 
-.jp-pos-float-bl {
+.pos-float-bl {
   z-index:999;
   position:fixed;
   bottom:20px;
   left:0;
 }
 
-.jp-pos-float-bl .jp-visibility-control {
+.pos-float-bl .jp-visibility-control {
   display:block;
   position:absolute;
   right:-30px;
@@ -562,17 +562,17 @@
   border-left:1px solid rgba(0,0,0,0.3);
 }
 
-.ui-dark.jp-pos-float-bl .jp-visibility-control {
+.pos-float-bl.ui-dark .jp-visibility-control {
   border-left:1px solid rgba(255,255,255,0.2);
 }
                                        
-.jp-pos-float-bl .jp-visibility-control,
-.jp-pos-float-bl .jp-visibility-control .jp-gui-texture,
-.jp-pos-float-bl .jp-visibility-control .jp-gui-gradient {
+.pos-float-bl .jp-visibility-control,
+.pos-float-bl .jp-visibility-control .jp-gui-texture,
+.pos-float-bl .jp-visibility-control .jp-gui-gradient {
   border-radius:0 8px 8px 0;
 }
 
-.jp-pos-fixed-b {
+.pos-fixed-b {
   z-index:999;
   position:fixed;
   bottom:0;
@@ -580,11 +580,11 @@
   width:100%;
 }
 
-.jp-pos-fixed-b .jp-visibility-control {
+.pos-fixed-b .jp-visibility-control {
   display:none;
 }
 
-.jp-pos-fixed-t {
+.pos-fixed-t {
   z-index:999;
   position:fixed;
   top:0;
@@ -592,11 +592,11 @@
   width:100%;
 }
 
-.jp-pos-fixed-t .jp-visibility-control {
+.pos-fixed-t .jp-visibility-control {
   display:none;
 }
 
-.jp-pos-fixed-t .jp-playlist {
+.pos-fixed-t .jp-playlist {
   position:absolute;
   top:69px;
   left:0;
@@ -628,7 +628,7 @@
 
 @media only screen and (max-width:479px) {
 
-.jp-pos-float-bl {
+.pos-float-bl {
   z-index:999;
   position:fixed;
   bottom:0;
@@ -636,7 +636,7 @@
   width:100%;
 }
 
-.jp-pos-float-bl .jp-visibility-control {
+.pos-float-bl .jp-visibility-control {
   display:none;
 }
 
