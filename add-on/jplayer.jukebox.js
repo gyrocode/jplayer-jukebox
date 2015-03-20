@@ -51,7 +51,7 @@
       _options: {
          jukeboxOptions: {
             position: 'float-bl',
-            className: 'ui-gradient'
+            className: 'ui-light ui-gradient'
          },
          playlistOptions: {
             enableRemoveControls: true
