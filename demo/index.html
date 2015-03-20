@@ -47,12 +47,6 @@ jPlayer Jukebox allows to play media files on the page by scanning all links and
 The script was created as Yahoo! Media Player replacement after Yahoo! decided to no longer support its development and shut it down on June 30, 2013, see <a href="http://yahoo.tumblr.com/062813">this announcement</a> for more information.
 </p>
 
-<h2>Known Limitations</h2>
-
-<p>
-Support for formats other than MP3 may not be available on all platforms.
-</p>
-
 <h2>Demo</h2>
 
 <p>
@@ -72,7 +66,7 @@ Support for formats other than MP3 may not be available on all platforms.
 <pre><code>&lt;!-- jQuery --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
 
-&lt;!-- jPlayer --&gt;
+&lt;!-- jPlayer Jukebox add-on --&gt;
 &lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.0/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
 &lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.0/jplayer.jukebox.bundle.min.js"&gt;&lt;/script&gt;
 
@@ -99,7 +93,7 @@ Support for formats other than MP3 may not be available on all platforms.
 <ol>
 <li><p>Follow instructions in <a href="http://jplayer.org/latest/quick-start-guide">jPlayer Quick Start Guide</a> on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example <code>/js/jplayer</code>.</p></li>
 <li>
-<p>Download jPlayer Jukebox add-on, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.</p>
+<p>Download <a href="https://github.com/gyrocode/jplayer-jukebox" title="Download jPlayer Jukebox add-on">jPlayer Jukebox add-on</a>, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.</p>
 
 <p>For example, if you have uploaded jPlayer into <code>/js/jplayer</code> folder, then the add-on should be placed in <code>/js/jplayer/add-on</code> folder and Uno skin - in <code>/js/jplayer/skin</code> folder.</p>
 </li>
@@ -109,7 +103,7 @@ Support for formats other than MP3 may not be available on all platforms.
 <pre><code>&lt;!-- jQuery --&gt;
 &lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
 
-&lt;!-- jPlayer --&gt;
+&lt;!-- jPlayer Jukebox add-on --&gt;
 &lt;link type="text/css" href="/js/jplayer/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
 &lt;script type="text/javascript" src="/js/jplayer/jquery.jplayer.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="/js/jplayer/add-on/jplayer.playlist.min.js"&gt;&lt;/script&gt;
@@ -135,7 +129,9 @@ Support for formats other than MP3 may not be available on all platforms.
 </li>
 </ol>
 
-<h2>Options</h2>
+<h2>Documentation</h2>
+
+<h3>Options</h3>
 
 <p>Options specific to jPlayer Jukebox add-on can be specified using <code>jukeboxOptions</code> object.</p>
 
@@ -169,7 +165,7 @@ Support for formats other than MP3 may not be available on all platforms.
             To add a texture, add the following code before the closing <code>&lt;/head&gt;</code> tag.
             </p>
 <pre><code>&lt;style type="text/css"&gt;
-.jp-gui-texture {
+.jp-jukebox .jp-gui-texture {
   background: url(/path/to/texture.jpg);
 }
 &lt;/style&gt;</code></pre>
@@ -179,6 +175,12 @@ Support for formats other than MP3 may not be available on all platforms.
 
    </dd>
 </dl>
+
+<h2>Known Limitations</h2>
+
+<p>
+Support for formats other than MP3 may not be available on all platforms.
+</p>
 
 <h2>Download</h2>
 
@@ -196,7 +198,10 @@ Support for formats other than MP3 may not be available on all platforms.
 
 <h2>Feedback</h2>
 
-<p>Please leave your comments or suggestions <a href="http://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond" title="jPlayer Jukebox add-on – Yahoo! Media Player replacement">here</a>.</p>
+<p>
+Please leave your comments or suggestions <a href="http://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond" title="jPlayer Jukebox add-on – Yahoo! Media Player replacement">here</a>.
+Issues can be reported at <a href="https://github.com/gyrocode/jplayer-jukebox/issues">GitHub</a>.
+</p>
 
 <h2>Copyright</h2>
 

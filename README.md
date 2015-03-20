@@ -19,7 +19,7 @@ Installation
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <!-- jPlayer -->
+    <!-- jPlayer Jukebox add-on -->
     <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.0/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
     <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.0/jplayer.jukebox.bundle.min.js"></script>
 
@@ -54,7 +54,7 @@ Installation
     <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-    <!-- jPlayer -->
+    <!-- jPlayer Jukebox add-on -->
     <link type="text/css" href="/js/jplayer/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
     <script type="text/javascript" src="/js/jplayer/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="/js/jplayer/add-on/jplayer.playlist.min.js"></script>
