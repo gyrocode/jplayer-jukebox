@@ -88,7 +88,12 @@
 
 .jp-jukebox .jp-toggles button,
 .jp-jukebox .jp-volume-controls button {
-  color:#888;
+  color:#666;
+}
+
+.jp-jukebox.ui-dark .jp-toggles button,
+.jp-jukebox.ui-dark .jp-volume-controls button {
+  color:#999;
 }
 
 .jp-jukebox {
