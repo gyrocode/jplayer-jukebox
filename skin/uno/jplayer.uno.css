@@ -48,8 +48,7 @@
   border:0;
 }
 
-.jp-jukebox, 
-.jp-jukebox .jp-visibility-control {
+.jp-jukebox .jp-gui-bg {
   background-color:#CCC;
 }
 
@@ -68,8 +67,7 @@
   text-shadow:0 0 2px #FFF;
 }
 
-.jp-jukebox.ui-dark, 
-.jp-jukebox.ui-dark .jp-visibility-control {
+.jp-jukebox.ui-dark .jp-gui-bg {
   background-color:#333;
 }
 
@@ -377,27 +375,27 @@
 
 /* Note that the first-child (IE6) and last-child (IE6/7/8) selectors do not work on IE */
 
-div.jp-type-playlist div.jp-playlist li:last-child {
+.jp-playlist li:last-child {
   padding:5px 0 5px 20px;
   border-bottom:none;
 }
 
-div.jp-type-playlist div.jp-playlist li.jp-playlist-current:before {
+.jp-playlist li.jp-playlist-current:before {
   font-family:"uno";
   position:absolute;
   left:10px;
   content:"\e603";
 }
 
-div.jp-type-playlist div.jp-playlist a {
+.jp-playlist a {
   text-decoration:none;
 }
 
-div.jp-type-playlist div.jp-playlist a.jp-playlist-current {
+.jp-playlist a.jp-playlist-current {
   font-weight:bold;
 }
 
-div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
+.jp-playlist a.jp-playlist-item-remove {
   float:right;
   display:inline;
   text-align:right;
@@ -405,14 +403,14 @@ div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove {
   font-weight:bold;
 }
 
-div.jp-type-playlist div.jp-playlist span.jp-free-media {
+.jp-playlist span.jp-free-media {
   float:right;
   display:inline;
   text-align:right;
   margin-right:10px;
 }
 
-span.jp-artist {
+.jp-playlist span.jp-artist {
   font-size:.75em;
   font-weight:normal;
 }
@@ -595,7 +593,7 @@ span.jp-artist {
 
 .jp-pos-fixed-t .jp-playlist {
   position:absolute;
-  top:62px;
+  top:69px;
   left:0;
 }
 

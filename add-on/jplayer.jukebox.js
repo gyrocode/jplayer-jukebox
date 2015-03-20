@@ -73,10 +73,9 @@
 
          var html =
             '<div id="' + jb.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
-            + '<div class="jp-type-playlist">'
-            + '<div class="jp-playlist"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
+            + '<div class="jp-playlist jp-gui-bg"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
             + '<div id="' + jb.id + '" class="jp-jplayer"></div>'
-            + '<div class="jp-gui">'
+            + '<div class="jp-gui jp-gui-bg">'
             + '   <div class="jp-gui-texture"></div>'
             + '   <div class="jp-gui-gradient"></div>'
             + '   <div class="jp-interface">'
@@ -112,13 +111,12 @@
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
             + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
-            + '      <div class="jp-visibility-control"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
+            + '      <div class="jp-visibility-control jp-gui-bg"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
             + '<div class="jp-no-solution">'
             + '   <span>Update Required</span>'
             + '   To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.'
-            + '</div>'
             + '</div>'
             + '</div>';
          $('body').append(html);
