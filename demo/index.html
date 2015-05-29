@@ -20,7 +20,7 @@
       // Initialize jPlayerJukebox
       var jpjb = new jPlayerJukebox({
          'swfPath': 'jplayer',
-         'supplied': 'mp3,oga,wav,fla,webma',
+         'supplied': 'mp3,oga,wav,fla,webma,xspf',
          'jukeboxOptions': {
             'position': 'float-bl'
          }
@@ -52,7 +52,9 @@ The script was created as Yahoo! Media Player replacement after Yahoo! decided t
 <p>
 <a href="media/wav.wav" title="" data-artist="Lucas Gonze">.WAV file</a><br />
 <a href="media/mp3.mp3" title="" data-artist="Lucas Gonze">.MP3 file</a><br />
-<a href="media/ogg.ogg" title="" data-artist="Lucas Gonze">.OGG file</a>
+<a href="media/ogg.ogg" title="" data-artist="Lucas Gonze">.OGG file</a><br />
+<a href="media/xspf.xspf">.XSPF file</a><br />
+<a href="media/xspf.xml" type="application/xspf+xml">.XML file in XSPF format</a>
 </p>
 
 <h2>Installation</h2>
@@ -67,14 +69,14 @@ The script was created as Yahoo! Media Player replacement after Yahoo! decided t
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
 
 &lt;!-- jPlayer Jukebox add-on --&gt;
-&lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.0/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
-&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.0/jplayer.jukebox.bundle.min.js"&gt;&lt;/script&gt;
+&lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.1/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
+&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.1/jplayer.jukebox.bundle.min.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript"&gt;
    $(document).ready(function(){
       // Initialize jPlayerJukebox
       var jpjb = new jPlayerJukebox({
-         'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.0/',
+         'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.1/',
          'supplied': 'mp3,oga,wav',
          'jukeboxOptions': {
             'position': 'float-bl'

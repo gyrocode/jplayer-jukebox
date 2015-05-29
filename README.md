@@ -20,14 +20,14 @@ Installation
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <!-- jPlayer Jukebox add-on -->
-    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.0/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.0/jplayer.jukebox.bundle.min.js"></script>
+    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.1/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.1/jplayer.jukebox.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(document).ready(function(){
           // Initialize jPlayerJukebox
           var jpjb = new jPlayerJukebox({
-             'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.0/',
+             'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.1/',
              'supplied': 'mp3,oga,wav',
              'jukeboxOptions': {
                 'position': 'float-bl'

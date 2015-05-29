@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.5.0 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.5.1 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       var jb = this;
@@ -37,7 +37,8 @@
          'oga':'oga,ogg',
          'fla':'fla,flac',
          'wav':'wav',
-         'webma':'webma,weba'
+         'webma':'webma,weba',
+         'xspf':'xspf'
       };
 
       this.p.bind($.jPlayer.event.ready,  function(e){ jb._onReady(e);  });
@@ -169,7 +170,7 @@
             index = str.lastIndexOf('.');
             if((!is_proto_avail || is_file_avail) && index != -1){
                var extension = str.substring(index + 1, str.length).toLowerCase();
-
+               
                for(var typeSupported in jb.typesSupported){
                   if(jb.typesSupported.hasOwnProperty(typeSupported)){
                      if($.inArray(extension, jb.typesSupported[typeSupported].split(',')) != -1){
@@ -230,53 +231,94 @@
          var jb = this;
 
          // List of links that haven't been processed
-         var anchors = $('a').not('.jp-page-link');
-
-         var mediaTracks = [];
-         var idFirst = jb.pl.playlist.length;
+         var $anchors_media = $('a.jp-media');
+         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link');
 
          var i, $el, type;
 
-         for(i = 0; i < anchors.length; i++){
-            $el = $(anchors[i]);
-            if($el.hasClass('jp-media')){
-               type = jb._getTypeFromUrl($el.attr('href'));
-               if(type){
-                  mediaTracks.push({ el: $el, type: type, id: idFirst + mediaTracks.length, time: 0 });
+         for(i = 0; i < $anchors.length; i++){
+            $el = $($anchors[i]);
+            type = jb._getTypeFromUrl($el.attr('href'));
+            if(!type && $el.attr('type') === 'application/xspf+xml'){
+               if($.inArray('xspf', jb.options.supplied.split(',')) !== -1){
+                  type = 'xspf'; 
+               }
+            }
+
+            if(type){
+               if(type === 'xspf'){
+                  jb._addPlaylist(type, $el);
+               } else {
+                  var track = {
+                     'el':     $el,
+                     'type':   type,
+                     'id':     jb.pl.playlist.length,
+                     'time':   0, 
+                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
+                     'url':    $el.attr('href'),
+                     'title':  ($el.attr('title')) ? $el.attr('title') : jb._getFilenameFromUrl($el.attr('href')),
+                     'artist': ($el.data('artist')) ? $el.data('artist') : "",
+                     'album':  ($el.data('album')) ? $el.data('album') : "",
+                     'image':  ($el.data('image')) ? $el.data('image') : ""
+                  };
+
+                  jb._addTrack(track);
                }
             }
          }
+      },
 
-         if(!mediaTracks.length){
-            for(i = 0; i < anchors.length; i++){
-               $el = $(anchors[i]);
-               type = jb._getTypeFromUrl($el.attr('href'));
-               if(type){
-                  mediaTracks.push({ el: $el, type: type, id: idFirst + mediaTracks.length, time: 0 });
-               }
-            }
+      // Adds external playlist
+      _addPlaylist: function(type, $el){
+         var jb = this;
+
+         if(type === 'xspf'){
+            $.get($el.attr('href'), {}, function(xml){
+               $('track', xml).each(function (index, value){
+                  console.log(this);
+                  var track = {
+                     'el':     $el,
+                     'type':   type,
+                     'id':     jb.pl.playlist.length,
+                     'time':   0, 
+                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
+                     'url':    $('location', this).text(),
+                     'title':  $('title', this).text(),
+                     'artist': $('creator', this).text(),
+                     'album':  $('album', this).text(),
+                     'image':  $('image', this).text()
+                  };
+
+                  track['type'] = jb._getTypeFromUrl(track['url']);
+
+                  if(track['type']){
+                     jb._addTrack(track);
+                  }
+               });
+            }, 'xml');
          }
+      },
 
-         for(i = 0; i < mediaTracks.length; i++){
-            track = mediaTracks[i];
-            track.btn = $('<span />', { 'class': 'jp-page-btn-play' });
+      // Adds track to playlist
+      _addTrack: function(track){
+         var jb = this;
 
+         if(!track.el.hasClass('jp-page-link')){
             track.btn.click({ track: track }, function(e){ jb._onClick(e); });
-
-            var playlistEntry = {
-               title:(track.el.attr('title')) ? track.el.attr('title') : jb._getFilenameFromUrl(track.el.attr('href')),
-               artist:(track.el.data('artist')) ? track.el.data('artist') : "",
-               track: track
-            };
-
-            playlistEntry[track.type] = track.el.attr('href');
-            jb.pl.add(playlistEntry);
-
             track.el.before(track.btn);
             track.el.addClass('jp-page-link');
-
             track.el.click({ track: track }, function(e){ jb._onClick(e); });
          }
+
+         var playlistEntry = {
+            'title': track.title,
+            'artist': track.artist,
+            'poster': track.image,
+            track: track
+         };
+
+         playlistEntry[track.type] = track.url;
+         jb.pl.add(playlistEntry);        
       },
 
       // Handles mouse click event on media link
