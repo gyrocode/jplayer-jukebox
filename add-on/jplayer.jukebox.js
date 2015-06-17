@@ -74,13 +74,14 @@
       // Elements: Player container
       g.$jc = $('#' + g.id + '_container');
 
-
+      // Construct jPlayerPlaylist object
       g.pl = new jPlayerPlaylist({
             jPlayer: '#' + g.id,
             cssSelectorAncestor: '#' + g.id + '_container'
          },
          [], g.options
       );
+
 
       // Event handlers
       g.$jp.on($.jPlayer.event.ready,  function(e){ _onReady(e);  });
@@ -277,7 +278,7 @@
       // Handles event when jPlayer is initialized
       function _onReady(e){
          $('.jp-playlist').slideUp(0);
-         $('.jp-show-playlist').click(function(e){
+         $('.jp-show-playlist').on('click', function(e){
             if(g.$jc.hasClass('jp-state-playlist')){
                g.$jc.removeClass('jp-state-playlist');
                $('.jp-playlist').slideUp(400);
@@ -294,7 +295,7 @@
 
          if(g.options.jukeboxOptions.position === 'float-bl'){
             jb.setVisibility(!g.options.autohide.minimize, 0);
-            $('.jp-visibility-toggle').click(function(e){
+            $('.jp-visibility-toggle').on('click', function(e){
                var $btn = $(this);
                jb.setVisibility(g.$jc.hasClass('jp-visibility-off'), 400);
             });
@@ -311,7 +312,6 @@
          if(type === 'xspf'){
             $.get($el.attr('href'), {}, function(xml){
                $('track', xml).each(function (index, value){
-                  console.log(this);
                   var track = {
                      'el':     $el,
                      'type':   type,
@@ -338,17 +338,17 @@
       // Adds track to playlist
       function _addTrack(track){
          if(!track.el.hasClass('jp-page-link')){
-            track.btn.click({ track: track }, function(e){ _onClick(e); });
+            track.btn.on('click', null, { 'track': track }, function(e){ _onClick(e); });
             track.el.before(track.btn);
             track.el.addClass('jp-page-link');
-            track.el.click({ track: track }, function(e){ _onClick(e); });
+            track.el.on('click', null, { 'track': track }, function(e){ _onClick(e); });
          }
 
          var playlistEntry = {
-            'title': track.title,
+            'title':  track.title,
             'artist': track.artist,
             'poster': track.image,
-            track: track
+            'track':  track
          };
 
          playlistEntry[track.type] = track.url;
