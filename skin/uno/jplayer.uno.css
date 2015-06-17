@@ -1,4 +1,4 @@
-/*! Uno skin for jPlayer Jukebox add-on 0.5.x (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! Uno skin for jPlayer Jukebox add-on 0.6.x (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 @font-face {
   font-family:'uno';
   src:url('fonts/uno.eot');
@@ -365,34 +365,30 @@
 }
 
 .jp-playlist li {
-  padding:5px 0 4px 20px;
+  padding:0 0 0 20px;
   border-bottom:1px solid rgba(0,0,0,0.15);
 }
 
 .ui-dark .jp-playlist li {
-  padding:5px 0 4px 20px;
   border-bottom:1px solid rgba(255,255,255,0.15);
 }
 
-.jp-playlist li div {
-  display:inline;
-}
-
 /* Note that the first-child (IE6) and last-child (IE6/7/8) selectors do not work on IE */
-
 .jp-playlist li:last-child {
-  padding:5px 0 5px 20px;
   border-bottom:none;
 }
 
 .jp-playlist li.jp-playlist-current:before {
   font-family:"uno";
+  padding:5px 0;
   position:absolute;
   left:10px;
   content:"\e603";
 }
 
 .jp-playlist a {
+  padding:5px 0;
+  display:inline-block;
   text-decoration:none;
 }
 
@@ -402,9 +398,9 @@
 
 .jp-playlist a.jp-playlist-item-remove {
   float:right;
-  display:inline;
   text-align:right;
-  margin-right:10px;
+  padding-left:5px;
+  padding-right:5px;
   font-weight:bold;
 }
 
