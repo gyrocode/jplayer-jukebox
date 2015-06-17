@@ -8,33 +8,34 @@
 
       var g = {
          // ID attribute
-         id: 'jplayer_jukebox',
+         'id': 'jplayer_jukebox',
 
          // Options: Default values
-         optionsDefaults: {
-            jukeboxOptions: {
-               position: 'float-bl',
-               className: 'ui-light ui-gradient'
+         'optionsDefaults': {
+            'jukeboxOptions': {
+               'autoAdvance': true,
+               'position': 'float-bl',
+               'className': 'ui-light ui-gradient'
             },
-            playlistOptions: {
-               enableRemoveControls: true
+            'playlistOptions': {
+               'enableRemoveControls': true
             },
-            supplied: 'mp3',
-            smoothPlayBar: true,
-            keyEnabled: true,
-            audioFullScreen: false,
-            autohide: {
-               minimize: true,
-               restored: false
+            'supplied': 'mp3',
+            'smoothPlayBar': true,
+            'keyEnabled': true,
+            'audioFullScreen': false,
+            'autohide': {
+               'minimize': true,
+               'restored': false
             },
-            useStateClassSkin: true
+            'useStateClassSkin': true
          },
 
          // Current track
-         track: null,
+         'track': null,
 
          // Supported formats and their extensions
-         typesSupported: {
+         'typesSupported': {
             'mp3':'mp3',
             'm4a':'m4a',
             'oga':'oga,ogg',
@@ -89,10 +90,37 @@
       g.$jp.on($.jPlayer.event.pause,  function(e){ _onPause(e);  });
       g.$jp.on($.jPlayer.event.resize, function(e){ _onResize(e); });
 
+      // Remove handler set by jPlayerPlaylist 
+      // to allow fine-grained control on auto-advancing functionality
+      g.$jp.off($.jPlayer.event.ended);
+      g.$jp.on($.jPlayer.event.ended,  function(e){ _onEnded(e); });
+
 
       //
       // PRIVILEGED FUNCTIONS
       //
+
+      // Add a media item to the end of the playlist
+      this.add = function(track, playNow){ return g.pl.add(track, playNow); };
+
+      // Removes the item from the playlist
+      this.remove = function(index){ return g.pl.remove(index); };
+
+      // Selects the item in the playlist
+      this.select = function(index){ return g.pl.select(index); };
+
+      // Shuffles the playlist
+      this.shuffle = function(shuffled, playNow){ return g.pl.shuffle(index); };
+
+      // Moves to and plays the next track in the playlist
+      this.next = function(){ return g.pl.next(); };
+
+      // Moves to and plays the previous track in the playlist
+      this.previous = function(){ return g.pl.previous(); };
+
+      // Pause the current track
+      this.pause = function(){ return g.pl.pause(); };
+
 
       // Parses page and adds media links to the playlist
       this.parsePage = function(e){
@@ -440,6 +468,13 @@
             } else {
                $('.jp-playlist').slideUp(0);
             }
+         }
+      }
+
+      // Handles ended event
+      function _onEnded(e){
+         if(g.options.jukeboxOptions.autoAdvance){
+            jb.next();
          }
       }
    };
