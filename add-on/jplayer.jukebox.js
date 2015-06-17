@@ -1,81 +1,165 @@
-/*! jPlayer Jukebox add-on 0.5.1 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.0 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
+      //
+      // INITIALIZATION
+      //
       var jb = this;
-      this.id = 'jplayer_jukebox';
 
-      this.options = $.extend({}, this._options, options);
-      if(typeof options['jukeboxOptions'] !== 'undefined'){
-         this.options.jukeboxOptions = $.extend({}, this._options.jukeboxOptions, options.jukeboxOptions);
+      var g = {
+         // ID attribute
+         id: 'jplayer_jukebox',
+
+         // Options: Default values
+         optionsDefaults: {
+            jukeboxOptions: {
+               position: 'float-bl',
+               className: 'ui-light ui-gradient'
+            },
+            playlistOptions: {
+               enableRemoveControls: true
+            },
+            supplied: 'mp3',
+            smoothPlayBar: true,
+            keyEnabled: true,
+            audioFullScreen: false,
+            autohide: {
+               minimize: true,
+               restored: false
+            },
+            useStateClassSkin: true
+         },
+
+         // Current track
+         track: null,
+
+         // Supported formats and their extensions
+         typesSupported: {
+            'mp3':'mp3',
+            'm4a':'m4a',
+            'oga':'oga,ogg',
+            'fla':'fla,flac',
+            'wav':'wav',
+            'webma':'webma,weba',
+            'xspf':'xspf'
+         }
+      };
+
+
+      // Options
+      g.options = $.extend({}, g.optionsDefaults, options);
+      if(typeof g.options['jukeboxOptions'] !== 'undefined'){
+         g.options.jukeboxOptions = $.extend(
+            {},
+            g.optionsDefaults.jukeboxOptions,
+            g.options.jukeboxOptions
+         );
       }
 
       // Validate options parameters
-      if( jb.options.jukeboxOptions.position !== 'float-bl'
-          && jb.options.jukeboxOptions.position !== 'fixed-t'
-          && jb.options.jukeboxOptions.position !== 'fixed-b' )
+      if( g.options.jukeboxOptions.position !== 'float-bl'
+          && g.options.jukeboxOptions.position !== 'fixed-t'
+          && g.options.jukeboxOptions.position !== 'fixed-b' )
       {
-         jb.options.jukeboxOptions.position = this._options.jukeboxOptions.position;
+         g.options.jukeboxOptions.position = g.optionsDefaults.jukeboxOptions.position;
       }
 
-      this._construct();
 
-      this.j = $('#' + jb.id + '_container');
-      this.p = $('#' + jb.id);
+      _construct();
 
 
-      this.pl = new jPlayerPlaylist({
-            jPlayer: '#' + jb.id,
-            cssSelectorAncestor: '#' + jb.id + '_container'
+      // Elements: Player
+      g.$jp = $('#' + g.id);
+
+      // Elements: Player container
+      g.$jc = $('#' + g.id + '_container');
+
+
+      g.pl = new jPlayerPlaylist({
+            jPlayer: '#' + g.id,
+            cssSelectorAncestor: '#' + g.id + '_container'
          },
-         [], this.options
+         [], g.options
       );
 
-      this.trackCur = null;
-      this.typesSupported = {
-         'mp3':'mp3',
-         'm4a':'m4a',
-         'oga':'oga,ogg',
-         'fla':'fla,flac',
-         'wav':'wav',
-         'webma':'webma,weba',
-         'xspf':'xspf'
-      };
+      // Event handlers
+      g.$jp.on($.jPlayer.event.ready,  function(e){ _onReady(e);  });
+      g.$jp.on($.jPlayer.event.play,   function(e){ _onPlay(e);   });
+      g.$jp.on($.jPlayer.event.pause,  function(e){ _onPause(e);  });
+      g.$jp.on($.jPlayer.event.resize, function(e){ _onResize(e); });
 
-      this.p.bind($.jPlayer.event.ready,  function(e){ jb._onReady(e);  });
-      this.p.bind($.jPlayer.event.play,   function(e){ jb._onPlay(e);   });
-      this.p.bind($.jPlayer.event.pause,  function(e){ jb._onPause(e);  });
-      this.p.bind($.jPlayer.event.resize, function(e){ jb._onResize(e); });
-   };
 
-   jPlayerJukebox.prototype = {
-      // Default options
-      _options: {
-         jukeboxOptions: {
-            position: 'float-bl',
-            className: 'ui-light ui-gradient'
-         },
-         playlistOptions: {
-            enableRemoveControls: true
-         },
-         supplied: 'mp3',
-         smoothPlayBar: true,
-         keyEnabled: true,
-         audioFullScreen: false,
-         autohide: {
-            minimize: true,
-            restored: false
-         },
-         useStateClassSkin: true
-      },
+      //
+      // PRIVILEGED FUNCTIONS
+      //
 
-      // Builds media player on the page
-      _construct: function(){
+      // Parses page and adds media links to the playlist
+      this.parsePage = function(e){
          var jb = this;
 
+         // List of links that haven't been processed
+         var $anchors_media = $('a.jp-media');
+         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link');
+
+         var i, $el, type;
+
+         for(i = 0; i < $anchors.length; i++){
+            $el = $($anchors[i]);
+            type = _getTypeFromUrl($el.attr('href'));
+            if(!type && $el.attr('type') === 'application/xspf+xml'){
+               if($.inArray('xspf', g.options.supplied.split(',')) !== -1){
+                  type = 'xspf';
+               }
+            }
+
+            if(type){
+               if(type === 'xspf'){
+                  _addPlaylist(type, $el);
+               } else {
+                  var track = {
+                     'el':     $el,
+                     'type':   type,
+                     'id':     g.pl.playlist.length,
+                     'time':   0,
+                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
+                     'url':    $el.attr('href'),
+                     'title':  ($el.attr('title')) ? $el.attr('title') : _getFilenameFromUrl($el.attr('href')),
+                     'artist': ($el.data('artist')) ? $el.data('artist') : "",
+                     'album':  ($el.data('album')) ? $el.data('album') : "",
+                     'image':  ($el.data('image')) ? $el.data('image') : ""
+                  };
+
+                  _addTrack(track);
+               }
+            }
+         }
+      };
+
+      this.setVisibility = function(state, speed){
+         var jb = this;
+         if(state){
+            g.$jc.finish().animate({ left: '0' }, speed, function(){
+               $(this).addClass('jp-visibility-on').removeClass('jp-visibility-off');
+            });
+         } else {
+            var width = g.$jc.outerWidth();
+            g.$jc.finish().animate({ left: '-' + (width+1) + 'px' }, speed, function(){
+               $(this).addClass('jp-visibility-off').removeClass('jp-visibility-on');
+            });
+         }
+      };
+
+
+      //
+      // PRIVATE FUNCTIONS
+      //
+
+      // Builds media player on the page
+      function _construct(){
          var html =
-            '<div id="' + jb.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
+            '<div id="' + g.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
             + '<div class="jp-playlist jp-gui-bg"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
-            + '<div id="' + jb.id + '" class="jp-jplayer"></div>'
+            + '<div id="' + g.id + '" class="jp-jplayer"></div>'
             + '<div class="jp-gui jp-gui-bg">'
             + '   <div class="jp-gui-texture"></div>'
             + '   <div class="jp-gui-gradient"></div>'
@@ -121,10 +205,10 @@
             + '</div>'
             + '</div>';
          $('body').append(html);
-      },
+      }
 
       // Gets filename from URL
-      _getFilenameFromUrl: function (url) {
+      function _getFilenameFromUrl(url) {
          var fn = url;
 
          index = fn.indexOf('?');
@@ -138,12 +222,10 @@
          }
 
          return fn;
-      },
+      }
 
       // Gets media type from URL
-      _getTypeFromUrl: function (url) {
-         var jb = this;
-
+      function _getTypeFromUrl(url) {
          var type = null;
          try {
             var str = url;
@@ -170,17 +252,17 @@
             index = str.lastIndexOf('.');
             if((!is_proto_avail || is_file_avail) && index != -1){
                var extension = str.substring(index + 1, str.length).toLowerCase();
-               
-               for(var typeSupported in jb.typesSupported){
-                  if(jb.typesSupported.hasOwnProperty(typeSupported)){
-                     if($.inArray(extension, jb.typesSupported[typeSupported].split(',')) != -1){
+
+               for(var typeSupported in g.typesSupported){
+                  if(g.typesSupported.hasOwnProperty(typeSupported)){
+                     if($.inArray(extension, g.typesSupported[typeSupported].split(',')) != -1){
                         type = typeSupported;
                         break;
                      }
                   }
                }
 
-               if($.inArray(type, jb.options.supplied.split(',')) == -1){
+               if($.inArray(type, g.options.supplied.split(',')) == -1){
                   type = null;
                }
             }
@@ -190,88 +272,42 @@
          } catch(e) {
             return type;
          }
-      },
+      }
 
       // Handles event when jPlayer is initialized
-      _onReady: function(e){
-         var jb = this;
-
+      function _onReady(e){
          $('.jp-playlist').slideUp(0);
          $('.jp-show-playlist').click(function(e){
-            if(jb.j.hasClass('jp-state-playlist')){
-               jb.j.removeClass('jp-state-playlist');
+            if(g.$jc.hasClass('jp-state-playlist')){
+               g.$jc.removeClass('jp-state-playlist');
                $('.jp-playlist').slideUp(400);
             } else {
-               jb.j.addClass('jp-state-playlist');
+               g.$jc.addClass('jp-state-playlist');
                $('.jp-playlist').slideDown(400);
             }
          });
 
-         $('#' + jb.id + '_container')
+         g.$jc
             .css('visibility', 'visible')
-            .addClass('pos-' + jb.options.jukeboxOptions.position)
-            .addClass(jb.options.jukeboxOptions.className);
+            .addClass('pos-' + g.options.jukeboxOptions.position)
+            .addClass(g.options.jukeboxOptions.className);
 
-         if(jb.options.jukeboxOptions.position === 'float-bl'){
-            jb.setVisibility(!jb.options.autohide.minimize, 0);
+         if(g.options.jukeboxOptions.position === 'float-bl'){
+            jb.setVisibility(!g.options.autohide.minimize, 0);
             $('.jp-visibility-toggle').click(function(e){
                var $btn = $(this);
-               jb.setVisibility(($('#' + jb.id + '_container').hasClass('jp-visibility-off')), 400);
+               jb.setVisibility(g.$jc.hasClass('jp-visibility-off'), 400);
             });
          }
 
          // Force visibility of details pane
          $('.jp-details').show();
 
-         this.parsePage();
-      },
-
-      // Parses page and adds media links to the playlist
-      parsePage: function(e){
-         var jb = this;
-
-         // List of links that haven't been processed
-         var $anchors_media = $('a.jp-media');
-         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link');
-
-         var i, $el, type;
-
-         for(i = 0; i < $anchors.length; i++){
-            $el = $($anchors[i]);
-            type = jb._getTypeFromUrl($el.attr('href'));
-            if(!type && $el.attr('type') === 'application/xspf+xml'){
-               if($.inArray('xspf', jb.options.supplied.split(',')) !== -1){
-                  type = 'xspf'; 
-               }
-            }
-
-            if(type){
-               if(type === 'xspf'){
-                  jb._addPlaylist(type, $el);
-               } else {
-                  var track = {
-                     'el':     $el,
-                     'type':   type,
-                     'id':     jb.pl.playlist.length,
-                     'time':   0, 
-                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
-                     'url':    $el.attr('href'),
-                     'title':  ($el.attr('title')) ? $el.attr('title') : jb._getFilenameFromUrl($el.attr('href')),
-                     'artist': ($el.data('artist')) ? $el.data('artist') : "",
-                     'album':  ($el.data('album')) ? $el.data('album') : "",
-                     'image':  ($el.data('image')) ? $el.data('image') : ""
-                  };
-
-                  jb._addTrack(track);
-               }
-            }
-         }
-      },
+         jb.parsePage();
+      }
 
       // Adds external playlist
-      _addPlaylist: function(type, $el){
-         var jb = this;
-
+      function _addPlaylist(type, $el){
          if(type === 'xspf'){
             $.get($el.attr('href'), {}, function(xml){
                $('track', xml).each(function (index, value){
@@ -279,8 +315,8 @@
                   var track = {
                      'el':     $el,
                      'type':   type,
-                     'id':     jb.pl.playlist.length,
-                     'time':   0, 
+                     'id':     g.pl.playlist.length,
+                     'time':   0,
                      'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
                      'url':    $('location', this).text(),
                      'title':  $('title', this).text(),
@@ -289,25 +325,23 @@
                      'image':  $('image', this).text()
                   };
 
-                  track['type'] = jb._getTypeFromUrl(track['url']);
+                  track['type'] = _getTypeFromUrl(track['url']);
 
                   if(track['type']){
-                     jb._addTrack(track);
+                     _addTrack(track);
                   }
                });
             }, 'xml');
          }
-      },
+      }
 
       // Adds track to playlist
-      _addTrack: function(track){
-         var jb = this;
-
+      function _addTrack(track){
          if(!track.el.hasClass('jp-page-link')){
-            track.btn.click({ track: track }, function(e){ jb._onClick(e); });
+            track.btn.click({ track: track }, function(e){ _onClick(e); });
             track.el.before(track.btn);
             track.el.addClass('jp-page-link');
-            track.el.click({ track: track }, function(e){ jb._onClick(e); });
+            track.el.click({ track: track }, function(e){ _onClick(e); });
          }
 
          var playlistEntry = {
@@ -318,39 +352,38 @@
          };
 
          playlistEntry[track.type] = track.url;
-         jb.pl.add(playlistEntry);        
-      },
+         g.pl.add(playlistEntry);
+      }
 
       // Handles mouse click event on media link
-      _onClick: function(e){
-         var jb = this;
+      function _onClick(e){
          var track = e.data.track;
 
          if(track.btn.hasClass('jp-page-btn-pause')){
-            jb.p.jPlayer("pause");
+            g.$jp.jPlayer("pause");
 
          } else {
             var isTrackFound = false;
 
             // Determine player position
             var playTime = 0;
-            if(jb.trackCur){
-               if(track.id == jb.trackCur.id){
-                 playTime = jb.trackCur.time;
+            if(g.track){
+               if(track.id == g.track.id){
+                 playTime = g.track.time;
                  isTrackFound = true;
 
                } else {
-                 jb.trackCur.time = 0;
+                 g.track.time = 0;
                }
             }
 
             // Select track in the playlist
             var i;
             if(playTime === 0){
-               for(i = 0; i < jb.pl.playlist.length; i++){
-                  playlistItem = jb.pl.playlist[i];
+               for(i = 0; i < g.pl.playlist.length; i++){
+                  playlistItem = g.pl.playlist[i];
                   if(playlistItem.track.id == track.id){
-                     jb.pl.select(i);
+                     g.pl.select(i);
                      isTrackFound = true;
                      break;
                   }
@@ -359,66 +392,48 @@
 
             // If item exists in the playlist
             if(isTrackFound){
-               jb.p.jPlayer('play', playTime);
+               g.$jp.jPlayer('play', playTime);
 
             // Otherwise, if item doesn't exist in the playlist (removed by user)
             } else {
                var media = { track: track };
                media[track.type] = track.el.attr('href');
 
-               jb.p.jPlayer('setMedia', media);
-               jb.p.jPlayer('play', playTime);
+               g.$jp.jPlayer('setMedia', media);
+               g.$jp.jPlayer('play', playTime);
             }
          }
 
          e.preventDefault();
-      },
-
-      setVisibility: function(state, speed){
-         var jb = this;
-         if(state){
-            $('#' + jb.id + '_container').finish().animate({ left: '0' }, speed, function(){
-               $(this).addClass('jp-visibility-on').removeClass('jp-visibility-off');
-            });
-         } else {
-            var width = $('#' + jb.id + '_container').outerWidth();
-            $('#' + jb.id + '_container').finish().animate({ left: '-' + (width+1) + 'px' }, speed, function(){
-               $(this).addClass('jp-visibility-off').removeClass('jp-visibility-on');
-            });
-         }
-      },
+      }
 
       // Handles play event
-      _onPlay: function(e){
-         var jb = this;
-         jb.trackCur = e.jPlayer.status.media.track;
+      function _onPlay(e){
+         g.track = e.jPlayer.status.media.track;
 
          if($('.jp-page-btn-pause').length){
             $('.jp-page-btn-pause').removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
          }
 
-         jb.trackCur.btn.removeClass('jp-page-btn-play').addClass('jp-page-btn-pause');
-      },
+         g.track.btn.removeClass('jp-page-btn-play').addClass('jp-page-btn-pause');
+      }
 
       // Handles pause event
-      _onPause: function(e){
-         var jb = this;
-
-         if(jb.trackCur){
+      function _onPause(e){
+         if(g.track){
             if(!e.jPlayer.status.ended){
-               jb.trackCur.time = e.jPlayer.status.currentTime;
+               g.track.time = e.jPlayer.status.currentTime;
             } else {
-               jb.trackCur.time = 0;
+               g.track.time = 0;
             }
          }
 
          var track = e.jPlayer.status.media.track;
          track.btn.removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
-      },
+      }
 
       // Handles resize event
-      _onResize: function(e){
-         var jb = this;
+      function _onResize(e){
          if($('.jp-playlist-on').css('display') !== 'none'){
             if(e.jPlayer.options.fullScreen){
                $('.jp-playlist').slideDown(0);
@@ -428,4 +443,5 @@
          }
       }
    };
+
 })(jQuery);
