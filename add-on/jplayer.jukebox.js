@@ -311,7 +311,6 @@
          if(type === 'xspf'){
             $.get($el.attr('href'), {}, function(xml){
                $('track', xml).each(function (index, value){
-                  console.log(this);
                   var track = {
                      'el':     $el,
                      'type':   type,
