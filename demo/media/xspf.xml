@@ -5,19 +5,19 @@
       <location>media/mp3.mp3</location>
       <title>.xspf as .xml - .mp3</title>
       <creator>Lucas Gonze</creator>
-      <image>media/album.jpg</image>
+      <image>media/cover1.jpg</image>
     </track>
     <track>
       <location>media/ogg.ogg</location>
       <title>.xspf as .xml - .ogg</title>
       <creator>Lucas Gonze</creator>
-      <image>media/album.jpg</image>
+      <image>media/cover2.jpg</image>
     </track>
     <track>
       <location>media/wav.wav</location>
       <title>.xspf as .xml - .wav</title>
       <creator>Lucas Gonze</creator>
-      <image>media/album.jpg</image>
+      <image></image>
     </track>
   </trackList>
 </playlist>

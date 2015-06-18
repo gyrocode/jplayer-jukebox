@@ -14,6 +14,7 @@
          'optionsDefaults': {
             'jukeboxOptions': {
                'autoAdvance': true,
+               'cover': false,
                'position': 'float-bl',
                'className': 'ui-light ui-gradient'
             },
@@ -90,7 +91,7 @@
       g.$jp.on($.jPlayer.event.pause,  function(e){ _onPause(e);  });
       g.$jp.on($.jPlayer.event.resize, function(e){ _onResize(e); });
 
-      // Remove handler set by jPlayerPlaylist 
+      // Remove handler set by jPlayerPlaylist
       // to allow fine-grained control on auto-advancing functionality
       g.$jp.off($.jPlayer.event.ended);
       g.$jp.on($.jPlayer.event.ended,  function(e){ _onEnded(e); });
@@ -222,6 +223,7 @@
             + '         </div>'
             + '      </div>'
             + '      <div class="jp-details">'
+            + '         <div class="jp-cover" aria-label="cover art"><div class="jp-cover-default"></div></div>'
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
             + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
@@ -318,7 +320,8 @@
 
          g.$jc
             .css('visibility', 'visible')
-            .addClass('pos-' + g.options.jukeboxOptions.position)
+            .addClass('opt-pos-' + g.options.jukeboxOptions.position)
+            .addClass('opt-cover-' + ((g.options.jukeboxOptions.cover) ? 1 : 0))
             .addClass(g.options.jukeboxOptions.className);
 
          if(g.options.jukeboxOptions.position === 'float-bl'){
@@ -441,6 +444,20 @@
 
          if($('.jp-page-btn-pause').length){
             $('.jp-page-btn-pause').removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
+         }
+
+         // If cover art should be shown
+         if(g.options.jukeboxOptions.cover){
+            // If track image exists
+            if(g.track.image !== ""){
+               $('.jp-cover').html(
+                  $('<img>', { 'src': g.track.image }).wrap('<div></div>').parent().html()
+               );
+
+            // Otherwise, display default cover art
+            } else {
+               $('.jp-cover').html('<div class="jp-cover-default"></div>');
+            }
          }
 
          g.track.btn.removeClass('jp-page-btn-play').addClass('jp-page-btn-pause');
