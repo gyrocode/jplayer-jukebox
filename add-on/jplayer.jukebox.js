@@ -169,7 +169,7 @@
 
          // List of links that haven't been processed
          var $anchors_media = $('a.jp-media');
-         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link, .jp-playlist-item-free');
+         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link, .jp-playlist-item-free, .jp-media-ignore');
 
          var i, $el, type, url;
 
