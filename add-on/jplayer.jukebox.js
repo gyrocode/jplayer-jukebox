@@ -217,6 +217,19 @@
          else { return null; }
       };
 
+      // Shows/hides the playlist
+      this.showPlaylist = function(show, speed){
+         if(typeof speed === 'undefined'){ speed = 0; }
+
+         if(show){
+            g.$jc.addClass('jp-state-playlist');
+            $('.jp-playlist').slideDown(speed);
+         } else {
+            g.$jc.removeClass('jp-state-playlist');
+            $('.jp-playlist').slideUp(speed);
+         }
+      };
+
       // Sets visual state of the player
       this.setViewState = function(viewState, speed){
          var jb = this;
@@ -247,7 +260,17 @@
                css[property] = 0;
 
             } else {
-               css[property] = '-' + (g.$jc.outerHeight() + 1) + 'px';
+               if(g.options.jukeboxOptions.position === 'fixed-t'){
+                  var playlistHeight = 
+                     $(g.$jc).hasClass('jp-state-playlist')
+                        ? $(g.$jc).find('.jp-playlist').outerHeight()
+                        : 0;
+
+                  css[property] = '-' + (g.$jc.outerHeight() + playlistHeight + 1) + 'px';
+
+               } else {
+                  css[property] = '-' + (g.$jc.outerHeight() + 1) + 'px';
+               }
             }
          }
 
@@ -386,15 +409,11 @@
 
       // Handles event when jPlayer is initialized
       function _onReady(e){
-         $('.jp-playlist').slideUp(0);
+         // Hide playlist by default
+         jb.showPlaylist(false, 0);
+         // Handle playlist toggle button
          $('.jp-show-playlist').on('click', function(e){
-            if(g.$jc.hasClass('jp-state-playlist')){
-               g.$jc.removeClass('jp-state-playlist');
-               $('.jp-playlist').slideUp(400);
-            } else {
-               g.$jc.addClass('jp-state-playlist');
-               $('.jp-playlist').slideDown(400);
-            }
+            jb.showPlaylist(!g.$jc.hasClass('jp-state-playlist'), 400);
          });
 
          g.$jc
