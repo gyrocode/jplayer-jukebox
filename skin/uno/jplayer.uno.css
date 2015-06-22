@@ -15,7 +15,7 @@
 .jp-controls button:before,
 .jp-volume-controls button:before,
 .jp-toggles button:before,
-.jp-visibility-control button:before,
+.jp-viewstate-control button:before,
 .jp-page-btn-play:before,
 .jp-page-btn-pause:before
 {
@@ -54,7 +54,7 @@
 
 .jp-jukebox,
 .jp-jukebox a,
-.jp-jukebox .jp-visibility-control {
+.jp-jukebox .jp-viewstate-control {
   color:#333;
   text-shadow:0 0 2px #FFF;
 }
@@ -73,7 +73,7 @@
 
 .jp-jukebox.ui-dark,
 .jp-jukebox.ui-dark a,
-.jp-jukebox.ui-dark .jp-visibility-control {
+.jp-jukebox.ui-dark .jp-viewstate-control {
   color:#CCC;
   text-shadow:0 0 2px #000;
 }
@@ -521,12 +521,12 @@
 
 /* @group Player pop-out button */
 
-.jp-visibility-control {
+.jp-viewstate-control {
   display:none;
   position:relative;
 }
 
-.jp-visibility-control button {
+.jp-viewstate-control button {
   position:absolute;
   width:100%;
   top:0;
@@ -540,11 +540,11 @@
   cursor:pointer;
 }
 
-.jp-visibility-control button:before {
+.jp-viewstate-control button:before {
   font-size:24px;
 }
 
-.jp-visibility-control button.jp-visibility-toggle:before {
+.jp-viewstate-control button.jp-viewstate-toggle:before {
   position:absolute;
   top:50%;
   width:24px;
@@ -554,11 +554,11 @@
   cursor:pointer;
 }
 
-.jp-visibility-on .jp-visibility-toggle:before {
+.jp-viewstate-maximized .jp-viewstate-toggle:before {
   content:"\e610";
 }
 
-.jp-visibility-off .jp-visibility-toggle:before {
+.jp-viewstate-minimized .jp-viewstate-toggle:before {
   content:"\e603";
 }
 
@@ -596,7 +596,7 @@
   left:0;
 }
 
-.opt-pos-float-bl .jp-visibility-control {
+.opt-pos-float-bl .jp-viewstate-control {
   display:block;
   position:absolute;
   right:-30px;
@@ -608,13 +608,13 @@
   border-left:1px solid rgba(0,0,0,0.3);
 }
 
-.opt-pos-float-bl.ui-dark .jp-visibility-control {
+.opt-pos-float-bl.ui-dark .jp-viewstate-control {
   border-left:1px solid rgba(255,255,255,0.2);
 }
 
-.opt-pos-float-bl .jp-visibility-control,
-.opt-pos-float-bl .jp-visibility-control .jp-gui-texture,
-.opt-pos-float-bl .jp-visibility-control .jp-gui-gradient {
+.opt-pos-float-bl .jp-viewstate-control,
+.opt-pos-float-bl .jp-viewstate-control .jp-gui-texture,
+.opt-pos-float-bl .jp-viewstate-control .jp-gui-gradient {
   border-radius:0 8px 8px 0;
 }
 
@@ -626,7 +626,7 @@
   width:100%;
 }
 
-.opt-pos-fixed-b .jp-visibility-control {
+.opt-pos-fixed-b .jp-viewstate-control {
   display:none;
 }
 
@@ -638,7 +638,7 @@
   width:100%;
 }
 
-.opt-pos-fixed-t .jp-visibility-control {
+.opt-pos-fixed-t .jp-viewstate-control {
   display:none;
 }
 
@@ -682,7 +682,7 @@
   width:100%;
 }
 
-.opt-pos-float-bl .jp-visibility-control {
+.opt-pos-float-bl .jp-viewstate-control {
   display:none;
 }
 

@@ -16,7 +16,8 @@
                'autoAdvance': true,
                'cover': false,
                'position': 'float-bl',
-               'className': 'ui-light ui-gradient'
+               'className': 'ui-light ui-gradient',
+               'viewState': 'minimized'
             },
             'playlistOptions': {
                'enableRemoveControls': true
@@ -26,7 +27,6 @@
             'keyEnabled': true,
             'audioFullScreen': false,
             'autohide': {
-               'minimize': true,
                'restored': false
             },
             'useStateClassSkin': true
@@ -59,11 +59,20 @@
       }
 
       // Validate options parameters
-      if( g.options.jukeboxOptions.position !== 'float-bl'
-          && g.options.jukeboxOptions.position !== 'fixed-t'
-          && g.options.jukeboxOptions.position !== 'fixed-b' )
+      if( $.inArray(
+            g.options.jukeboxOptions.position,
+            ['float-bl','fixed-t', 'fixed-b']
+          ) === -1 )
       {
          g.options.jukeboxOptions.position = g.optionsDefaults.jukeboxOptions.position;
+      }
+
+      if( $.inArray(
+            g.options.jukeboxOptions.viewState,
+            ['minimized','maximized', 'hidden']
+          ) === -1 )
+      {
+         g.options.jukeboxOptions.viewState = g.optionsDefaults.jukeboxOptions.viewState;
       }
 
 
@@ -200,18 +209,53 @@
          }
       };
 
-      this.setVisibility = function(state, speed){
+      // Gets visual state of the player
+      this.getViewState = function(){
+         if(g.$jc.hasClass('jp-viewstate-minimized')){ return 'minimized'; }
+         else if(g.$jc.hasClass('jp-viewstate-maximized')){ return 'maximized'; }
+         else if(g.$jc.hasClass('jp-viewstate-hidden')){ return 'hidden'; }
+         else { return null; }
+      };
+
+      // Sets visual state of the player
+      this.setViewState = function(viewState, speed){
          var jb = this;
-         if(state){
-            g.$jc.finish().animate({ left: '0' }, speed, function(){
-               $(this).addClass('jp-visibility-on').removeClass('jp-visibility-off');
-            });
+         var css = {};
+
+         if(typeof speed === 'undefined'){ speed = 0; }
+
+         if(g.options.jukeboxOptions.position === 'float-bl'){
+            if(viewState === 'maximized'){
+               css = { 'left': 0 };
+
+            } else if(viewState === 'minimized'){
+               css = { 'left': '-' + (g.$jc.outerWidth() + 1) + 'px' };
+
+            } else if(viewState === 'hidden'){
+               css = { 'left': '-' + (g.$jc.outerWidth() + $(g.$jc).find('.jp-viewstate-control').outerWidth() + 1) + 'px' };
+            }
+
          } else {
-            var width = g.$jc.outerWidth();
-            g.$jc.finish().animate({ left: '-' + (width+1) + 'px' }, speed, function(){
-               $(this).addClass('jp-visibility-off').removeClass('jp-visibility-on');
-            });
+            var property;
+            if(g.options.jukeboxOptions.position === 'fixed-t'){
+               property = 'top';
+            } else {
+               property = 'bottom';
+            }
+
+            if(viewState === 'maximized' || viewState === 'minimized'){
+               css[property] = 0;
+
+            } else {
+               css[property] = '-' + (g.$jc.outerHeight() + 1) + 'px';
+            }
          }
+
+         g.$jc.finish().animate(css, speed, function(){
+            $(this)
+               .removeClass('jp-viewstate-minimized jp-viewstate-maximized jp-viewstate-hidden')
+               .addClass('jp-viewstate-' + viewState);
+         });
       };
 
 
@@ -262,7 +306,7 @@
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
             + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
-            + '      <div class="jp-visibility-control jp-gui-bg"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-visibility-toggle" role="button" tabindex="0">&times;</button></div>'
+            + '      <div class="jp-viewstate-control jp-gui-bg"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-viewstate-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
             + '<div class="jp-no-solution">'
@@ -359,13 +403,22 @@
             .addClass('opt-cover-' + ((g.options.jukeboxOptions.cover) ? 1 : 0))
             .addClass(g.options.jukeboxOptions.className);
 
+
+         // Set view state
+         jb.setViewState(g.options.jukeboxOptions.viewState, 0);
+
+         // Add handler for .jp-viewstate-toggle button
          if(g.options.jukeboxOptions.position === 'float-bl'){
-            jb.setVisibility(!g.options.autohide.minimize, 0);
-            $('.jp-visibility-toggle').on('click', function(e){
-               var $btn = $(this);
-               jb.setVisibility(g.$jc.hasClass('jp-visibility-off'), 400);
+            $('.jp-viewstate-toggle').on('click', function(e){
+               jb.setViewState(
+                  g.$jc.hasClass('jp-viewstate-minimized')
+                     ? 'maximized'
+                     : 'minimized',
+                  400
+               );
             });
          }
+
 
          // Force visibility of details pane
          $('.jp-details').show();
