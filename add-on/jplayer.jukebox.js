@@ -336,6 +336,13 @@
          $('.jp-details').show();
 
          jb.parsePage();
+
+         // If onInitComplete callback is defined
+         if( g.options.jukeboxOptions.hasOwnProperty('onInitComplete')
+             && typeof g.options.jukeboxOptions.onInitComplete === 'function' )
+         {
+            g.options.jukeboxOptions.onInitComplete(jb);
+         }
       }
 
       // Adds external playlist
