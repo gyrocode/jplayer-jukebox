@@ -102,16 +102,45 @@
       //
 
       // Add a media item to the end of the playlist
-      this.add = function(track, playNow){ return g.pl.add(track, playNow); };
+      this.add = function(track, playNow){
+         track.data = {
+            id: g.pl.playlist.length
+         };
+
+         return g.pl.add(track, playNow);
+      };
 
       // Removes the item from the playlist
-      this.remove = function(index){ return g.pl.remove(index); };
+      this.remove = function(index){
+         if(typeof index === 'undefined'){
+            // Remove all tracks
+            for(index = 0; index < g.pl.playlist.length; index++){
+               _removeTrack(g.pl.playlist[index]);
+            }
+
+            return g.pl.remove();
+
+         } else {
+            // NOTE: Negative index relates to end of array.
+            var index_adj = (index < 0) ? g.pl.playlist.length + index : index;
+            if(0 <= index_adj && index_adj < g.pl.playlist.length){
+               _removeTrack(g.pl.playlist[index_adj]);
+            }
+
+            return g.pl.remove(index);
+         }
+      };
+
+      // Clears the playlist but leaves links playble
+      this.clear = function(index){
+         return g.pl.remove();
+      };
 
       // Selects the item in the playlist
       this.select = function(index){ return g.pl.select(index); };
 
       // Shuffles the playlist
-      this.shuffle = function(shuffled, playNow){ return g.pl.shuffle(index); };
+      this.shuffle = function(shuffled, playNow){ return g.pl.shuffle(shuffled, playNow); };
 
       // Moves to and plays the next track in the playlist
       this.next = function(){ return g.pl.next(); };
@@ -122,20 +151,24 @@
       // Pause the current track
       this.pause = function(){ return g.pl.pause(); };
 
+      // Plays the item in the playlist
+      this.play = function(index){ return g.pl.play(index); };
 
       // Parses page and adds media links to the playlist
-      this.parsePage = function(e){
+      this.parse = function(e){
          var jb = this;
 
          // List of links that haven't been processed
          var $anchors_media = $('a.jp-media');
          var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link');
 
-         var i, $el, type;
+         var i, $el, type, url;
 
          for(i = 0; i < $anchors.length; i++){
             $el = $($anchors[i]);
-            type = _getTypeFromUrl($el.attr('href'));
+            url  = $el.attr('href');
+            type = _getTypeFromUrl(url);
+
             if(!type && $el.attr('type') === 'application/xspf+xml'){
                if($.inArray('xspf', g.options.supplied.split(',')) !== -1){
                   type = 'xspf';
@@ -145,22 +178,24 @@
             if(type){
                if(type === 'xspf'){
                   _addPlaylist(type, $el);
+
                } else {
                   var track = {
-                     'el':     $el,
-                     'type':   type,
-                     'id':     g.pl.playlist.length,
-                     'time':   0,
-                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
-                     'url':    $el.attr('href'),
-                     'title':  ($el.attr('title')) ? $el.attr('title') : _getFilenameFromUrl($el.attr('href')),
+                     'title':  ($el.attr('title'))  ? $el.attr('title')  : _getFilenameFromUrl($el.attr('href')),
                      'artist': ($el.data('artist')) ? $el.data('artist') : "",
-                     'album':  ($el.data('album')) ? $el.data('album') : "",
-                     'image':  ($el.data('image')) ? $el.data('image') : ""
+                     'album':  ($el.data('album'))  ? $el.data('album')  : "",
+                     'poster': ($el.data('image'))  ? $el.data('image')  : "",
+                     'data': {
+                        'el': $el,
+                        'id': g.pl.playlist.length
+                     }
                   };
+
+                  track[type] = url;
 
                   _addTrack(track);
                }
+
             }
          }
       };
@@ -335,7 +370,7 @@
          // Force visibility of details pane
          $('.jp-details').show();
 
-         jb.parsePage();
+         jb.parse();
 
          // If onInitComplete callback is defined
          if( g.options.jukeboxOptions.hasOwnProperty('onInitComplete')
@@ -346,26 +381,27 @@
       }
 
       // Adds external playlist
-      function _addPlaylist(type, $el){
-         if(type === 'xspf'){
+      function _addPlaylist(playlist_type, $el){
+         if(playlist_type === 'xspf'){
             $.get($el.attr('href'), {}, function(xml){
                $('track', xml).each(function (index, value){
-                  var track = {
-                     'el':     $el,
-                     'type':   type,
-                     'id':     g.pl.playlist.length,
-                     'time':   0,
-                     'btn':    $('<span />', { 'class': 'jp-page-btn-play' }),
-                     'url':    $('location', this).text(),
-                     'title':  $('title', this).text(),
-                     'artist': $('creator', this).text(),
-                     'album':  $('album', this).text(),
-                     'image':  $('image', this).text()
-                  };
+                  var url  =  $('location', this).text();
+                  var type =  _getTypeFromUrl(url);
 
-                  track['type'] = _getTypeFromUrl(track['url']);
+                  if(type){
+                     var track = {
+                        'title':  $('title', this).text(),
+                        'artist': $('creator', this).text(),
+                        'album':  $('album', this).text(),
+                        'poster': $('image', this).text(),
+                        'data': {
+                           'el': $el,
+                           'id': g.pl.playlist.length
+                        }
+                     };
 
-                  if(track['type']){
+                     track[type] = url;
+
                      _addTrack(track);
                   }
                });
@@ -375,29 +411,39 @@
 
       // Adds track to playlist
       function _addTrack(track){
-         if(!track.el.hasClass('jp-page-link')){
-            track.btn.on('click', null, { 'track': track }, function(e){ _onClick(e); });
-            track.el.before(track.btn);
-            track.el.addClass('jp-page-link');
-            track.el.on('click', null, { 'track': track }, function(e){ _onClick(e); });
+         track.data.time = 0;
+
+         if(track.data.hasOwnProperty('el') && track.data.el instanceof jQuery){
+            if(!track.data.el.hasClass('jp-page-link')){
+               track.data.btn = $('<span />', { 'class': 'jp-page-btn-play' });
+               track.data.btn.on('click', null, { 'track': track }, function(e){ _onClick(e); });
+               track.data.el.before(track.data.btn);
+               track.data.el.addClass('jp-page-link');
+               track.data.el.on('click', null, { 'track': track }, function(e){ _onClick(e); });
+            } else {
+               track.data.btn = track.data.el.prev('.jp-page-btn-play');
+            }
          }
 
-         var playlistEntry = {
-            'title':  track.title,
-            'artist': track.artist,
-            'poster': track.image,
-            'track':  track
-         };
+         g.pl.add(track);
+      }
 
-         playlistEntry[track.type] = track.url;
-         g.pl.add(playlistEntry);
+      // Removes track from the playlist
+      function _removeTrack(track){
+         if(track.data.hasOwnProperty('el') && track.data.el instanceof jQuery){
+            if(track.data.el.hasClass('jp-page-link')){
+               track.data.btn.remove();
+               track.data.el.removeClass('jp-page-link');
+               track.data.el.off('click');
+            }
+         }
       }
 
       // Handles mouse click event on media link
       function _onClick(e){
          var track = e.data.track;
 
-         if(track.btn.hasClass('jp-page-btn-pause')){
+         if(track.data.btn.hasClass('jp-page-btn-pause')){
             g.$jp.jPlayer("pause");
 
          } else {
@@ -406,12 +452,12 @@
             // Determine player position
             var playTime = 0;
             if(g.track){
-               if(track.id == g.track.id){
-                 playTime = g.track.time;
+               if(track.data.id == g.track.data.id){
+                 playTime = g.track.data.time;
                  isTrackFound = true;
 
                } else {
-                 g.track.time = 0;
+                 g.track.data.time = 0;
                }
             }
 
@@ -419,8 +465,7 @@
             var i;
             if(playTime === 0){
                for(i = 0; i < g.pl.playlist.length; i++){
-                  playlistItem = g.pl.playlist[i];
-                  if(playlistItem.track.id == track.id){
+                  if(g.pl.playlist[i].data.id == track.data.id){
                      g.pl.select(i);
                      isTrackFound = true;
                      break;
@@ -434,10 +479,7 @@
 
             // Otherwise, if item doesn't exist in the playlist (removed by user)
             } else {
-               var media = { track: track };
-               media[track.type] = track.el.attr('href');
-
-               g.$jp.jPlayer('setMedia', media);
+               g.$jp.jPlayer('setMedia', track);
                g.$jp.jPlayer('play', playTime);
             }
          }
@@ -447,7 +489,7 @@
 
       // Handles play event
       function _onPlay(e){
-         g.track = e.jPlayer.status.media.track;
+         g.track = e.jPlayer.status.media;
 
          if($('.jp-page-btn-pause').length){
             $('.jp-page-btn-pause').removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
@@ -456,9 +498,9 @@
          // If cover art should be shown
          if(g.options.jukeboxOptions.cover){
             // If track image exists
-            if(g.track.image !== ""){
+            if(g.track.poster !== ""){
                $('.jp-cover').html(
-                  $('<img>', { 'src': g.track.image }).wrap('<div></div>').parent().html()
+                  $('<img>', { 'src': g.track.poster }).wrap('<div></div>').parent().html()
                );
 
             // Otherwise, display default cover art
@@ -467,21 +509,25 @@
             }
          }
 
-         g.track.btn.removeClass('jp-page-btn-play').addClass('jp-page-btn-pause');
+         if(g.track.data.hasOwnProperty('el') && g.track.data.el instanceof jQuery){
+             g.track.data.btn.removeClass('jp-page-btn-play').addClass('jp-page-btn-pause');
+         }
       }
 
       // Handles pause event
       function _onPause(e){
          if(g.track){
             if(!e.jPlayer.status.ended){
-               g.track.time = e.jPlayer.status.currentTime;
+               g.track.data.time = e.jPlayer.status.currentTime;
             } else {
-               g.track.time = 0;
+               g.track.data.time = 0;
             }
          }
 
-         var track = e.jPlayer.status.media.track;
-         track.btn.removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
+         var track = e.jPlayer.status.media;
+         if(track.data.hasOwnProperty('el') && track.data.el instanceof jQuery){
+            track.data.btn.removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
+         }
       }
 
       // Handles resize event
