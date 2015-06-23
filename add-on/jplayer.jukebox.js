@@ -7,17 +7,16 @@
       var jb = this;
 
       var g = {
-         // ID attribute
-         'id': 'jplayer_jukebox',
-
          // Options: Default values
          'optionsDefaults': {
             'jukeboxOptions': {
                'autoAdvance': true,
+               'className': 'ui-light ui-gradient',
                'cover': false,
                'position': 'float-bl',
-               'className': 'ui-light ui-gradient',
-               'viewState': 'minimized'
+               'viewState': 'minimized',
+               'selectorParse': window.document,
+               'id': 'jplayer_jukebox'
             },
             'playlistOptions': {
                'enableRemoveControls': true
@@ -61,7 +60,7 @@
       // Validate options parameters
       if( $.inArray(
             g.options.jukeboxOptions.position,
-            ['float-bl','fixed-t', 'fixed-b']
+            ['float-bl','fixed-t','fixed-b','static']
           ) === -1 )
       {
          g.options.jukeboxOptions.position = g.optionsDefaults.jukeboxOptions.position;
@@ -80,10 +79,10 @@
 
 
       // Elements: Player
-      g.$jp = $('#' + g.id);
+      g.$jp = $('#' + g.options.jukeboxOptions.id + '_player');
 
       // Elements: Player container
-      g.$jc = $('#' + g.id + '_container');
+      g.$jc = $('#' + g.options.jukeboxOptions.id + '_container');
 
       // Override jPlayerPlaylist method for creating playlist items
       jPlayerPlaylist.prototype._createListItem = function(media) {
@@ -126,8 +125,8 @@
 
       // Construct jPlayerPlaylist object
       g.pl = new jPlayerPlaylist({
-            jPlayer: '#' + g.id,
-            cssSelectorAncestor: '#' + g.id + '_container'
+            jPlayer: '#' + g.options.jukeboxOptions.id + '_player',
+            cssSelectorAncestor: '#' + g.options.jukeboxOptions.id + '_container'
          },
          [], g.options
       );
@@ -222,8 +221,8 @@
          var jb = this;
 
          // List of links that haven't been processed
-         var $anchors_media = $('a.jp-media');
-         var $anchors = ($anchors_media.length) ? $anchors_media : $('a').not('.jp-page-link, .jp-playlist-item-free, .jp-media-ignore');
+         var $anchors_media = $('a.jp-media', g.options.jukeboxOptions.selectorParse);
+         var $anchors = ($anchors_media.length) ? $anchors_media : $('a', g.options.jukeboxOptions.selectorParse).not('.jp-page-link, .jp-playlist-item-free, .jp-media-ignore');
 
          var i, $el, type, url;
 
@@ -282,10 +281,10 @@
 
          if(show){
             g.$jc.addClass('jp-state-playlist');
-            $('.jp-playlist').slideDown(speed);
+            $('.jp-playlist', g.$jc).slideDown(speed);
          } else {
             g.$jc.removeClass('jp-state-playlist');
-            $('.jp-playlist').slideUp(speed);
+            $('.jp-playlist', g.$jc).slideUp(speed);
          }
       };
 
@@ -304,7 +303,7 @@
                css = { 'left': '-' + (g.$jc.outerWidth() + 1) + 'px' };
 
             } else if(viewState === 'hidden'){
-               css = { 'left': '-' + (g.$jc.outerWidth() + $(g.$jc).find('.jp-viewstate-control').outerWidth() + 1) + 'px' };
+               css = { 'left': '-' + (g.$jc.outerWidth() + $('.jp-viewstate-control', g.$jc).outerWidth() + 1) + 'px' };
             }
 
          } else {
@@ -322,7 +321,7 @@
                if(g.options.jukeboxOptions.position === 'fixed-t'){
                   var playlistHeight = 
                      $(g.$jc).hasClass('jp-state-playlist')
-                        ? $(g.$jc).find('.jp-playlist').outerHeight()
+                        ? $('.jp-playlist', g.$jc).outerHeight()
                         : 0;
 
                   css[property] = '-' + (g.$jc.outerHeight() + playlistHeight + 1) + 'px';
@@ -348,9 +347,9 @@
       // Builds media player on the page
       function _construct(){
          var html =
-            '<div id="' + g.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
+            '<div id="' + g.options.jukeboxOptions.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
             + '<div class="jp-playlist jp-gui-bg"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
-            + '<div id="' + g.id + '" class="jp-jplayer"></div>'
+            + '<div id="' + g.options.jukeboxOptions.id + '_player" class="jp-jplayer"></div>'
             + '<div class="jp-gui jp-gui-bg">'
             + '   <div class="jp-gui-texture"></div>'
             + '   <div class="jp-gui-gradient"></div>'
@@ -396,7 +395,14 @@
             + '   To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.'
             + '</div>'
             + '</div>';
-         $('body').append(html);
+
+         var $container = $('#' + g.options.jukeboxOptions.id);
+         if(!$container.length){
+            $container = $('<div></div>', { 'id': g.options.jukeboxOptions.id });
+            $('body').append($container);
+         }
+
+         $container.append(html);
       }
 
       // Gets filename from URL
@@ -471,7 +477,7 @@
          // Hide playlist by default
          jb.showPlaylist(false, 0);
          // Handle playlist toggle button
-         $('.jp-show-playlist').on('click', function(e){
+         $('.jp-show-playlist', g.$jc).on('click', function(e){
             jb.showPlaylist(!g.$jc.hasClass('jp-state-playlist'), 400);
          });
 
@@ -487,7 +493,7 @@
 
          // Add handler for .jp-viewstate-toggle button
          if(g.options.jukeboxOptions.position === 'float-bl'){
-            $('.jp-viewstate-toggle').on('click', function(e){
+            $('.jp-viewstate-toggle', g.$jc).on('click', function(e){
                jb.setViewState(
                   g.$jc.hasClass('jp-viewstate-minimized')
                      ? 'maximized'
@@ -499,7 +505,7 @@
 
 
          // Force visibility of details pane
-         $('.jp-details').show();
+         $('.jp-details', g.$jc).show();
 
          jb.parse();
 
@@ -624,21 +630,26 @@
       function _onPlay(e){
          g.track = e.jPlayer.status.media;
 
-         if($('.jp-page-btn-pause').length){
-            $('.jp-page-btn-pause').removeClass('jp-page-btn-pause').addClass('jp-page-btn-play');
+         if($('.jp-page-btn-pause', g.$jc).length){
+            $('.jp-page-btn-pause', g.$jc)
+               .removeClass('jp-page-btn-pause')
+               .addClass('jp-page-btn-play');
          }
 
          // If cover art should be shown
          if(g.options.jukeboxOptions.cover){
             // If track image exists
             if(g.track.poster !== ""){
-               $('.jp-cover').html(
-                  $('<img>', { 'src': g.track.poster }).wrap('<div></div>').parent().html()
+               $('.jp-cover', g.$jc).html(
+                  $('<img>', { 'src': g.track.poster })
+                     .wrap('<div></div>')
+                     .parent()
+                     .html()
                );
 
             // Otherwise, display default cover art
             } else {
-               $('.jp-cover').html('<div class="jp-cover-default"></div>');
+               $('.jp-cover', g.$jc).html('<div class="jp-cover-default"></div>');
             }
          }
 
@@ -665,11 +676,11 @@
 
       // Handles resize event
       function _onResize(e){
-         if($('.jp-playlist-on').css('display') !== 'none'){
+         if($('.jp-playlist-on', g.$jc).css('display') !== 'none'){
             if(e.jPlayer.options.fullScreen){
-               $('.jp-playlist').slideDown(0);
+               $('.jp-playlist', g.$jc).slideDown(0);
             } else {
-               $('.jp-playlist').slideUp(0);
+               $('.jp-playlist', g.$jc).slideUp(0);
             }
          }
       }
