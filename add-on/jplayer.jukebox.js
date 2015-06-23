@@ -460,7 +460,7 @@
          g.$jc
             .css('visibility', 'visible')
             .addClass('opt-pos-' + g.options.jukeboxOptions.position)
-            .addClass('opt-cover-' + ((g.options.jukeboxOptions.cover) ? 1 : 0))
+            .addClass('opt-' + ((g.options.jukeboxOptions.cover) ? '' : 'no-') + 'cover')
             .addClass(g.options.jukeboxOptions.className);
 
 
