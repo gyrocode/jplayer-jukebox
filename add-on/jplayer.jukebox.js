@@ -149,6 +149,11 @@
       // PRIVILEGED FUNCTIONS
       //
 
+      // Calls jPlayer method
+      this.jPlayer = function(){
+         return g.$jp.jPlayer.apply(g.$jp, arguments);
+      };
+
       // Add a media item to the end of the playlist
       this.add = function(track, playNow){
          track.data = {
