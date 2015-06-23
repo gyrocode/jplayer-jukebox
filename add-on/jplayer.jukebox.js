@@ -272,6 +272,7 @@
 
       // Shows/hides the playlist
       this.showPlaylist = function(show, speed){
+         if(typeof show === 'undefined'){ show = true; }
          if(typeof speed === 'undefined'){ speed = 0; }
 
          if(show){
