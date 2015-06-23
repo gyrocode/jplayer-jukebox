@@ -348,7 +348,7 @@
       function _construct(){
          var html =
             '<div id="' + g.options.jukeboxOptions.id + '_container" class="jp-jukebox" style="visibility:hidden" role="application" aria-label="media player">'
-            + '<div class="jp-playlist jp-gui-bg"><div class="jp-gui-texture"></div><ul><li></li></ul></div>'
+            + '<div class="jp-playlist-container"><div class="jp-playlist jp-gui-bg"><div class="jp-gui-texture"></div><ul><li></li></ul></div></div>'
             + '<div id="' + g.options.jukeboxOptions.id + '_player" class="jp-jplayer"></div>'
             + '<div class="jp-gui jp-gui-bg">'
             + '   <div class="jp-gui-texture"></div>'

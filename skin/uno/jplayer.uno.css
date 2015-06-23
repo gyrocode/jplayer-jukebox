@@ -340,12 +340,15 @@
   right:92px;
 }
 
-.jp-playlist {
-  position:relative;
-  display:none;
+.jp-playlist-container {
   max-height:300px;
   overflow-y:auto;
   width:100%;
+}
+
+.jp-playlist {
+  position:relative;
+  display:none;
 }
 
 .jp-details .jp-title {
@@ -427,7 +430,7 @@
 
 /* Note that the first-child (IE6) and last-child (IE6/7/8) selectors do not work on IE */
 .jp-playlist li:last-child {
-  border-bottom:none;
+  border-bottom:2px solid transparent;
 }
 
 .jp-playlist li.jp-playlist-current:before {
