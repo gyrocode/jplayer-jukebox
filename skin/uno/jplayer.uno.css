@@ -412,9 +412,11 @@
   margin:0;
   padding:0 10px;
   font-size:.75em;
+  line-height:2em;
 }
 
 .jp-playlist li {
+  clear:both;
   padding:0 0 0 20px;
   border-bottom:1px solid rgba(0,0,0,0.15);
 }
@@ -429,15 +431,13 @@
 }
 
 .jp-playlist li.jp-playlist-current:before {
-  font-family:"uno";
-  padding:5px 0;
   position:absolute;
   left:10px;
+  font-family:"uno";
   content:"\e603";
 }
 
 .jp-playlist a {
-  padding:5px 0;
   display:inline-block;
   text-decoration:none;
 }
@@ -448,22 +448,42 @@
 
 .jp-playlist a.jp-playlist-item-remove {
   float:right;
-  text-align:right;
-  padding-left:5px;
-  padding-right:5px;
-  font-weight:bold;
+  padding:0 5px;
 }
-
-.jp-playlist span.jp-free-media {
-  float:right;
-  display:inline;
-  text-align:right;
-  margin-right:10px;
+.jp-playlist a.jp-playlist-item-remove:before {
+  font-family:"uno";
+  font-size:1.4em;
+  content:"\e610";
 }
 
 .jp-playlist span.jp-artist {
   font-size:.75em;
   font-weight:normal;
+}
+
+.jp-playlist a.jp-playlist-item-buy {
+  float:right;
+  display:inline;
+  padding:0 5px;
+}
+
+.jp-playlist a.jp-playlist-item-buy:before {
+  font-family:"uno";
+  font-size:1.4em;
+  content:"\e604";
+}
+
+
+.jp-playlist a.jp-playlist-item-download {
+  float:right;
+  display:inline;
+  padding:0 5px;
+}
+
+.jp-playlist a.jp-playlist-item-download:before {
+  font-family:"uno";
+  font-size:1.4em;
+  content:"\e601";
 }
 
 /* @end */

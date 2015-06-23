@@ -22,7 +22,7 @@
             'playlistOptions': {
                'enableRemoveControls': true
             },
-            'supplied': 'mp3',
+            'supplied': 'mp3,oga,wav,fla,webma,xspf',
             'smoothPlayBar': true,
             'keyEnabled': true,
             'audioFullScreen': false,
@@ -85,6 +85,33 @@
       // Elements: Player container
       g.$jc = $('#' + g.id + '_container');
 
+      // Override jPlayerPlaylist method for creating playlist items
+      jPlayerPlaylist.prototype._createListItem = function(media) {
+         var self = this;
+
+         // Wrap the <li> contents in a <div>
+         var listItem = "<li><div>";
+
+         // Create link to remove a playlist entry
+         listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.removeItemClass + "'></a>";
+
+         // Create link to download a song
+         if(media.download){
+            listItem += '<a href="' + media.url + '" class="jp-playlist-item-download" target="_blank"></a>';
+         }
+
+         // Create link to buy a song
+         if(media.buy){
+            listItem += '<a href="' + media.buy + '" class="jp-playlist-item-buy" target="_blank"></a>';
+         }
+
+         // The title is given next in the HTML otherwise the float:right on the free media corrupts in IE6/7
+         listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.itemClass + "' tabindex='0'>" + media.title + (media.artist ? " <span class='jp-artist'>by " + media.artist + "</span>" : "") + "</a>";
+         listItem += "</div></li>";
+
+         return listItem;
+      };
+
       // Construct jPlayerPlaylist object
       g.pl = new jPlayerPlaylist({
             jPlayer: '#' + g.id,
@@ -115,6 +142,16 @@
          track.data = {
             id: g.pl.playlist.length
          };
+
+         $.each(track, function(key, value){
+            if(g.typesSupported.hasOwnProperty(key)){
+               track.type = key;
+               track.url  = value;
+               return false;
+            } else {
+               return true;
+            }
+         });
 
          return g.pl.add(track, playNow);
       };
@@ -190,10 +227,14 @@
 
                } else {
                   var track = {
-                     'title':  ($el.attr('title'))  ? $el.attr('title')  : _getFilenameFromUrl($el.attr('href')),
-                     'artist': ($el.data('artist')) ? $el.data('artist') : "",
-                     'album':  ($el.data('album'))  ? $el.data('album')  : "",
-                     'poster': ($el.data('image'))  ? $el.data('image')  : "",
+                     'title':    ($el.attr('title'))    ? $el.attr('title')  : _getFilenameFromUrl($el.attr('href')),
+                     'artist':   ($el.data('artist'))   ? $el.data('artist') : "",
+                     'album':    ($el.data('album'))    ? $el.data('album')  : "",
+                     'poster':   ($el.data('image'))    ? $el.data('image')  : "",
+                     'buy':      ($el.data('buy'))      ? $el.data('buy')  : "",
+                     'download': ($el.data('download')) ? $el.data('download')  : "",
+                     'url':      url,
+                     'type':     type,
                      'data': {
                         'el': $el,
                         'id': g.pl.playlist.length
@@ -466,6 +507,8 @@
                         'artist': $('creator', this).text(),
                         'album':  $('album', this).text(),
                         'poster': $('image', this).text(),
+                        'url':    url,
+                        'type':   type,
                         'data': {
                            'el': $el,
                            'id': g.pl.playlist.length
