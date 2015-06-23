@@ -105,6 +105,18 @@
             listItem += '<a href="' + media.buy + '" class="jp-playlist-item-buy" target="_blank"></a>';
          }
 
+         if(g.options.jukeboxOptions.cover){
+            listItem += '<span class="jp-playlist-item-cover">';
+
+            if(media.poster){
+               listItem += '<img src="' + media.poster + '">';
+            } else {
+               listItem += '<span class="jp-playlist-item-cover-default"></span>';
+            }
+
+            listItem += '</span>';
+         }
+
          // The title is given next in the HTML otherwise the float:right on the free media corrupts in IE6/7
          listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.itemClass + "' tabindex='0'>" + media.title + (media.artist ? " <span class='jp-artist'>by " + media.artist + "</span>" : "") + "</a>";
          listItem += "</div></li>";

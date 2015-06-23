@@ -387,13 +387,13 @@
 .opt-cover .jp-cover .jp-cover-default:before {
   font-family:"uno";
   position:absolute;
-  left:3px;
-  top:3px;
+  left:2px;
+  top:2px;
   content:"\e613";
-  font-size:30px;
-  line-height:30px;
+  font-size:32px;
+  line-height:32px;
   color:#EEE;
-  text-shadow:0 0 2px #666;
+  text-shadow:none;
 }
 
 .ui-dark.opt-cover .jp-cover .jp-cover-default:before {
@@ -484,6 +484,47 @@
   font-family:"uno";
   font-size:1.4em;
   content:"\e601";
+}
+
+.jp-playlist .jp-playlist-item-cover {
+  position:relative;
+  height:1.8em;
+  width:1.8em;
+  float:left;
+  margin:0.1em 10px 0.1em 0;
+}
+
+.jp-playlist .jp-playlist-item-cover .jp-playlist-item-cover-default {
+  display:block;
+  height:100%;
+  width:100%;
+  background-color:rgba(0,0,0,0.2);
+}
+
+.ui-dark .jp-playlist .jp-playlist-item-cover .jp-playlist-item-cover-default {
+  background-color:rgba(255,255,255,0.2);
+}
+
+.jp-playlist .jp-playlist-item-cover .jp-playlist-item-cover-default:before {
+  position:absolute;
+  left:0.05em;
+  top:0.05em;
+  color:#EEE;
+  text-shadow:none;
+  font-family:"uno";
+  font-size:1.7em;
+  line-height:1em;
+  content:"\e613";
+}
+
+.ui-dark .jp-playlist .jp-playlist-item-cover .jp-playlist-item-cover-default:before {
+  color:#CCC;
+  text-shadow:0 0 2px #333;
+}
+
+.jp-playlist .jp-playlist-item-cover img {
+  width:auto;
+  height:100%;
 }
 
 /* @end */
