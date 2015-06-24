@@ -420,7 +420,7 @@
 
 .jp-playlist li {
   clear:both;
-  padding:0 0 0 20px;
+  padding:0 0 0 15px;
   border-bottom:1px solid rgba(0,0,0,0.15);
 }
 
@@ -447,6 +447,10 @@
 
 .jp-playlist a.jp-playlist-current {
   font-weight:bold;
+}
+
+.jp-playlist a.jp-playlist-item {
+  display:table-cell;
 }
 
 .jp-playlist a.jp-playlist-item-remove {
