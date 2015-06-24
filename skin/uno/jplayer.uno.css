@@ -726,6 +726,10 @@
   left:0;
 }
 
+.opt-pos-static {
+  width:100%;
+}
+
 /* @end */
 
 /* @group Page elements */
