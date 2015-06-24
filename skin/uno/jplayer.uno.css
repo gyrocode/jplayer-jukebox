@@ -405,15 +405,20 @@
 }
 
 .opt-cover .jp-cover img {
-  width:auto;
-  height:100%;
+  max-width:100%;
+  max-height:100%;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 }
 
 .jp-playlist ul {
   position:relative;
   list-style-type:none;
   margin:0;
-  padding:0 10px;
+  padding:0 5px;
   font-size:.75em;
   line-height:2em;
 }
@@ -435,7 +440,7 @@
 
 .jp-playlist li.jp-playlist-current:before {
   position:absolute;
-  left:10px;
+  left:5px;
   font-family:"uno";
   content:"\e603";
 }
@@ -530,8 +535,13 @@
 }
 
 .jp-playlist .jp-playlist-item-cover img {
-  width:auto;
-  height:100%;
+  max-width:100%;
+  max-height:100%;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 }
 
 /* @end */
