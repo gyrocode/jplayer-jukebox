@@ -639,7 +639,7 @@
          // If cover art should be shown
          if(g.options.jukeboxOptions.cover){
             // If track image exists
-            if(g.track.poster !== ""){
+            if(g.track.poster){
                $('.jp-cover', g.$jc).html(
                   $('<img>', { 'src': g.track.poster })
                      .wrap('<div></div>')
