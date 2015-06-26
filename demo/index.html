@@ -20,11 +20,40 @@
       // Initialize jPlayerJukebox
       var jpjb = new jPlayerJukebox({
          'swfPath': 'jplayer',
-         'supplied': 'mp3,oga,wav,fla,webma,xspf',
          'jukeboxOptions': {
+            'autoAdvance': false,
             'position': 'float-bl'
          }
       });
+
+      $('#btn-api-select-1').on('click', function(){ jpjb.select(1); });
+      $('#btn-api-play').on('click', function(){ jpjb.play(); });
+      $('#btn-api-play-1').on('click', function(){ jpjb.play(1); });
+      $('#btn-api-pause').on('click', function(){ jpjb.pause(); });
+      $('#btn-api-next').on('click', function(){ jpjb.next(); });
+      $('#btn-api-previous').on('click', function(){ jpjb.previous(); });
+      $('#btn-api-shuffle').on('click', function(){ jpjb.shuffle(); });
+      $('#btn-api-add').on('click', function(){
+         jpjb.add({
+            'title': 'mp3 (New song)',
+            'artist': 'Lucas Gonze',
+            'mp3': 'media/mp3.mp3',
+            'poster': 'media/cover2.jpg',
+            'download': true,
+            'buy': 'https://www.freesound.org/people/lucasgonze/sounds/58970/'
+         });
+      });
+      $('#btn-api-remove').on('click', function(){ jpjb.remove(); });
+      $('#btn-api-remove-2').on('click', function(){ jpjb.remove(2); });
+      $('#btn-api-clear').on('click', function(){ jpjb.clear(); });
+      $('#btn-api-parse').on('click', function(){ jpjb.parse(); });
+
+      $('#btn-api-setViewState-minimized').on('click', function(){ jpjb.setViewState('minimized', 400); });
+      $('#btn-api-setViewState-maximized').on('click', function(){ jpjb.setViewState('maximized', 400); });
+      $('#btn-api-setViewState-hidden').on('click', function(){ jpjb.setViewState('hidden', 400); });
+
+      $('#btn-api-showPlaylist').on('click', function(){ jpjb.showPlaylist(); });
+      $('#btn-api-showPlaylist-false').on('click', function(){ jpjb.showPlaylist(false); });
    });
 </script>
 </head>
@@ -51,121 +80,45 @@ The script was created as Yahoo! Media Player replacement after Yahoo! decided t
 
 <p>
 <a href="media/wav.wav" title="" data-artist="Lucas Gonze">.WAV file</a><br />
-<a href="media/mp3.mp3" title="" data-artist="Lucas Gonze" data-image="media/cover1.jpg">.MP3 file</a><br />
+<a href="media/mp3.mp3" title="" data-artist="Lucas Gonze" data-image="media/cover1.jpg" data-download="1" data-buy="https://www.freesound.org/people/lucasgonze/sounds/58970/">.MP3 file</a><br />
 <a href="media/ogg.ogg" title="" data-artist="Lucas Gonze">.OGG file</a><br />
 <a href="media/xspf.xspf">.XSPF file</a><br />
 <a href="media/xspf.xml" type="application/xspf+xml">.XML file in XSPF format</a>
 </p>
 
-<h2>Installation</h2>
 
-<h3>Third-party hosted</h3>
+<h2>API Demo</h2>
 
-<ol>
-<li>
-<p>Include the following lines in HTML page right before the closing <code>&lt;/head&gt;</code> tag.</p>
+<a id="btn-api-select-1" href="javascript:;">select(1)</a> |
+<a id="btn-api-play" href="javascript:;">play()</a> |
+<a id="btn-api-play-1" href="javascript:;">play(1)</a> |
+<a id="btn-api-pause" href="javascript:;">pause()</a> |
+<a id="btn-api-next" href="javascript:;">next()</a> |
+<a id="btn-api-previous" href="javascript:;">previous()</a> |
+<a id="btn-api-shuffle" href="javascript:;">shuffle()</a> |
+<a id="btn-api-add" href="javascript:;">add()</a> |
+<a id="btn-api-remove" href="javascript:;">remove()</a> |
+<a id="btn-api-remove-2" href="javascript:;">remove(2)</a> |
+<a id="btn-api-clear" href="javascript:;">clear()</a> |
+<a id="btn-api-parse" href="javascript:;">parse()</a><br>
 
-<pre><code>&lt;!-- jQuery --&gt;
-&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
+<a id="btn-api-setViewState-minimized" href="javascript:;">setViewState('minimized', 400)</a> |
+<a id="btn-api-setViewState-maximized" href="javascript:;">setViewState('maximized', 400)</a> |
+<a id="btn-api-setViewState-hidden" href="javascript:;">setViewState('hidden', 400)</a><br>
 
-&lt;!-- jPlayer Jukebox add-on --&gt;
-&lt;link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.1/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
-&lt;script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.1/jplayer.jukebox.bundle.min.js"&gt;&lt;/script&gt;
+<a id="btn-api-showPlaylist" href="javascript:;">showPlaylist()</a> |
+<a id="btn-api-showPlaylist-false" href="javascript:;">showPlaylist(false)</a>
 
-&lt;script type="text/javascript"&gt;
-   $(document).ready(function(){
-      // Initialize jPlayerJukebox
-      var jpjb = new jPlayerJukebox({
-         'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.1/',
-         'supplied': 'mp3,oga,wav',
-         'jukeboxOptions': {
-            'position': 'float-bl'
-         }
-      });
-   });
-&lt;/script&gt;
-</code></pre>
-
-<p>If you are already using jQuery library on your page, you can skip the line that includes it above.</p>
-</li>
-</ol>
-
-<h3>Self-hosted</h3>
-
-<ol>
-<li><p>Follow instructions in <a href="http://jplayer.org/latest/quick-start-guide">jPlayer Quick Start Guide</a> on how to download and install jPlayer on your server. It is recommended to upload jPlayer into a separate folder, for example <code>/js/jplayer</code>.</p></li>
-<li>
-<p>Download <a href="https://github.com/gyrocode/jplayer-jukebox" title="Download jPlayer Jukebox add-on">jPlayer Jukebox add-on</a>, unzip the ZIP file and upload the files into the same location where you have uploaded jPlayer files.</p>
-
-<p>For example, if you have uploaded jPlayer into <code>/js/jplayer</code> folder, then the add-on should be placed in <code>/js/jplayer/add-on</code> folder and Uno skin - in <code>/js/jplayer/skin</code> folder.</p>
-</li>
-<li>
-<p>Include the following lines in HTML page right before the closing <code>&lt;/head&gt;</code> tag if you haven't done so already.</p>
-
-<pre><code>&lt;!-- jQuery --&gt;
-&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"&gt;&lt;/script&gt;
-
-&lt;!-- jPlayer Jukebox add-on --&gt;
-&lt;link type="text/css" href="/js/jplayer/skin/uno/jplayer.uno.min.css" rel="stylesheet" /&gt;
-&lt;script type="text/javascript" src="/js/jplayer/jquery.jplayer.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="/js/jplayer/add-on/jplayer.playlist.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="/js/jplayer/add-on/jplayer.jukebox.min.js"&gt;&lt;/script&gt;
-
-&lt;script type="text/javascript"&gt;
-   $(document).ready(function(){
-      // Initialize jPlayerJukebox
-      var jpjb = new jPlayerJukebox({
-         'swfPath': '/js/jplayer',
-         'supplied': 'mp3,oga,wav',
-         'jukeboxOptions': {
-            'position': 'float-bl'
-         }
-      });
-   });
-&lt;/script&gt;
-</code></pre>
-
-<p>If you have uploaded jPlayer into folder other than <code>/js/jplayer</code> folder, please modify the code accordingly.</p>
-
-<p>If you are already using jQuery library on your page, you can skip the line that includes it above.</p>
-</li>
-</ol>
 
 <h2>Documentation</h2>
 
 <p>Documentation is available at <a href="http://www.gyrocode.com/projects/jplayer-jukebox/">gyrocode.com/projects/jplayer-jukebox/</a>.
 
 
-<h2>Known Limitations</h2>
-
-<p>
-Support for formats other than MP3 may not be available on all platforms.
-</p>
-
-<h2>Download</h2>
-
-<p>
-<a href="https://github.com/gyrocode/jplayer-jukebox" title="Download jPlayer Jukebox add-on">jplayer-jukebox on GitHub</a>
-</p>
-
-<h2>Credits</h2>
-
-<ul>
-<li>Sound sample is created by <a href="https://www.freesound.org/people/lucasgonze/sounds/58970/">Lucas Gonze</a></li>
-<li><a href="https://github.com/google/material-design-icons">Material Design Icons</a> by <a href="https://github.com/google">Google</a>, <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> License</li>
-<li>Icon font is generated using <a href="https://icomoon.io/app">IcoMoon App</a></li>
-</ul>
-
-<h2>Feedback</h2>
-
-<p>
-Please leave your comments or suggestions <a href="http://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond" title="jPlayer Jukebox add-on – Yahoo! Media Player replacement">here</a>.
-Issues can be reported at <a href="https://github.com/gyrocode/jplayer-jukebox/issues">GitHub</a>.
-</p>
-
 <h2>Copyright</h2>
 
 <p>Michael Ryvkin, <a href="http://www.gyrocode.com/projects/jplayer-jukebox">gyrocode.com/projects/jplayer-jukebox</a></p>
+
 
 <h2>License</h2>
 
