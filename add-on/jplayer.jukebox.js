@@ -213,13 +213,13 @@
       // Shuffles the playlist
       this.shuffle = function(shuffled, playNow){ return g.pl.shuffle(shuffled, playNow); };
 
-      // Moves to and plays the next track in the playlist
+      // Moves to and plays the next item in the playlist
       this.next = function(){ return g.pl.next(); };
 
-      // Moves to and plays the previous track in the playlist
+      // Moves to and plays the previous item in the playlist
       this.previous = function(){ return g.pl.previous(); };
 
-      // Pauses the current track
+      // Pauses the current item
       this.pause = function(){ return g.pl.pause(); };
 
       // Plays the item in the playlist
@@ -230,7 +230,7 @@
          var jb = this;
 
          // List of links that haven't been processed
-         var $anchors_media = $('a.jp-media', g.options.jukeboxOptions.selectorParse);
+         var $anchors_media = $('a.jp-media', $(g.options.jukeboxOptions.selectorParse));
          var $anchors = ($anchors_media.length) ? $anchors_media : $('a', g.options.jukeboxOptions.selectorParse).not('.jp-page-link, .jp-playlist-item-free, .jp-media-ignore');
 
          var i, $el, type, url;
@@ -639,8 +639,8 @@
       function _onPlay(e){
          g.track = e.jPlayer.status.media;
 
-         if($('.jp-page-btn-pause', g.$jc).length){
-            $('.jp-page-btn-pause', g.$jc)
+         if($('.jp-page-btn-pause', $(g.options.jukeboxOptions.selectorParse)).length){
+            $('.jp-page-btn-pause', $(g.options.jukeboxOptions.selectorParse))
                .removeClass('jp-page-btn-pause')
                .addClass('jp-page-btn-play');
          }
