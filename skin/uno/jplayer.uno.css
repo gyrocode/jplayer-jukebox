@@ -364,7 +364,7 @@
   display:none;
 }
 
-.opt-cover .jp-cover {
+.opt-ui-cover .jp-cover {
   display:block;
   position:absolute;
   left:0;
@@ -373,21 +373,21 @@
   width:36px;
 }
 
-.opt-cover .jp-details .jp-title {
+.opt-ui-cover .jp-details .jp-title {
   margin-left:41px;
 }
 
-.opt-cover .jp-cover .jp-cover-default {
+.opt-ui-cover .jp-cover .jp-cover-default {
   background-color:rgba(0,0,0,0.2);
   height:36px;
   width:36px;
 }
 
-.ui-dark.opt-cover .jp-cover .jp-cover-default {
+.ui-dark.opt-ui-cover .jp-cover .jp-cover-default {
   background-color:rgba(255,255,255,0.2);
 }
 
-.opt-cover .jp-cover .jp-cover-default:before {
+.opt-ui-cover .jp-cover .jp-cover-default:before {
   font-family:"uno";
   position:absolute;
   left:2px;
@@ -399,12 +399,12 @@
   text-shadow:none;
 }
 
-.ui-dark.opt-cover .jp-cover .jp-cover-default:before {
+.ui-dark.opt-ui-cover .jp-cover .jp-cover-default:before {
   color:#CCC;
   text-shadow:0 0 2px #333;
 }
 
-.opt-cover .jp-cover img {
+.opt-ui-cover .jp-cover img {
   max-width:100%;
   max-height:100%;
   position:absolute;
