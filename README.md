@@ -1,12 +1,14 @@
-jplayer-jukebox
+jPlayer Jukebox
 ===============
 
 jPlayer Jukebox is add-on to jPlayer that allows to play media files on the page by scanning all links and adding them to a playlist.
+
 
 Demo
 ----
 
 Demo is available at [gyrocode.com/projects/jplayer-jukebox/](http://www.gyrocode.com/projects/jplayer-jukebox/).
+
 
 Installation
 ------------
@@ -20,15 +22,14 @@ Installation
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- jPlayer Jukebox add-on -->
-    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.5.1/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.5.1/jplayer.jukebox.bundle.min.js"></script>
+    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.6.0/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.6.0/jplayer.jukebox.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(document).ready(function(){
           // Initialize jPlayerJukebox
           var jpjb = new jPlayerJukebox({
-             'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.5.1/',
-             'supplied': 'mp3,oga,wav',
+             'swfPath': 'http://gyrocode.github.io/jplayer-jukebox/0.6.0/',
              'jukeboxOptions': {
                 'position': 'float-bl'
              }
@@ -65,7 +66,6 @@ Installation
           // Initialize jPlayerJukebox
           var jpjb = new jPlayerJukebox({
              'swfPath': '/js/jplayer',
-             'supplied': 'mp3,oga,wav',
              'jukeboxOptions': {
                 'position': 'float-bl'
              }
@@ -83,6 +83,27 @@ Documentation
 -------------
 
 Documentation is available at [gyrocode.com/projects/jplayer-jukebox/](http://www.gyrocode.com/projects/jplayer-jukebox/).
+
+
+Feedback
+--------
+
+Please leave your comments or suggestions [here](http://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond).
+Issues can be reported on [github.com](https://github.com/gyrocode/jplayer-jukebox/issues).
+
+
+Known Limitations
+-----------------
+
+Support for formats other than MP3 may not be available on all platforms.
+
+
+Credits
+-------
+
+- Sound sample is created by [Lucas Gonze](https://www.freesound.org/people/lucasgonze/sounds/58970/)
+- [Material Design Icons](https://github.com/google/material-design-icons) by [Google](https://github.com/google), [CC BY-SA 4.0](http://creativecommons.org/licenses/by-sa/4.0/) License
+- Icon font is generated using [IcoMoon App](https://icomoon.io/app)
 
 
 Copyright
