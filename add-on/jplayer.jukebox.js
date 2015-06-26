@@ -12,7 +12,8 @@
             'jukeboxOptions': {
                'autoAdvance': true,
                'className': 'ui-light ui-gradient',
-               'cover': false,
+               'uiCover': false,
+               'uiRemove': true,
                'position': 'float-bl',
                'viewState': 'minimized',
                'selectorParse': window.document,
@@ -75,6 +76,10 @@
       }
 
 
+      // Translating jukeboxOptions properties into existing properties of playlistOptions 
+      g.options.playlistOptions.enableRemoveControls = g.options.jukeboxOptions.uiRemove;
+
+
       _construct();
 
 
@@ -104,7 +109,7 @@
             listItem += '<a href="' + media.buy + '" class="jp-playlist-item-buy" target="_blank"></a>';
          }
 
-         if(g.options.jukeboxOptions.cover){
+         if(g.options.jukeboxOptions.uiCover){
             listItem += '<span class="jp-playlist-item-cover">';
 
             if(media.poster){
@@ -150,10 +155,11 @@
 
       // Calls jPlayer method
       this.jPlayer = function(){
-         return g.$jp.jPlayer.apply(g.$jp, arguments);
+         g.$jp.jPlayer.apply(g.$jp, arguments);
+         return this;
       };
 
-      // Add a media item to the end of the playlist
+      // Adds a media item to the end of the playlist
       this.add = function(track, playNow){
          track.data = {
             id: g.pl.playlist.length
@@ -193,8 +199,8 @@
          }
       };
 
-      // Clears the playlist but leaves links playble
-      this.clear = function(index){
+      // Clears the playlist but leaves links playable
+      this.clear = function(){
          return g.pl.remove();
       };
 
@@ -210,14 +216,14 @@
       // Moves to and plays the previous track in the playlist
       this.previous = function(){ return g.pl.previous(); };
 
-      // Pause the current track
+      // Pauses the current track
       this.pause = function(){ return g.pl.pause(); };
 
       // Plays the item in the playlist
       this.play = function(index){ return g.pl.play(index); };
 
       // Parses page and adds media links to the playlist
-      this.parse = function(e){
+      this.parse = function(){
          var jb = this;
 
          // List of links that haven't been processed
@@ -266,14 +272,6 @@
          }
       };
 
-      // Gets visual state of the player
-      this.getViewState = function(){
-         if(g.$jc.hasClass('jp-viewstate-minimized')){ return 'minimized'; }
-         else if(g.$jc.hasClass('jp-viewstate-maximized')){ return 'maximized'; }
-         else if(g.$jc.hasClass('jp-viewstate-hidden')){ return 'hidden'; }
-         else { return null; }
-      };
-
       // Shows/hides the playlist
       this.showPlaylist = function(show, speed){
          if(typeof show === 'undefined'){ show = true; }
@@ -286,6 +284,14 @@
             g.$jc.removeClass('jp-state-playlist');
             $('.jp-playlist', g.$jc).slideUp(speed);
          }
+      };
+
+      // Gets visual state of the player
+      this.getViewState = function(){
+         if(g.$jc.hasClass('jp-viewstate-minimized')){ return 'minimized'; }
+         else if(g.$jc.hasClass('jp-viewstate-maximized')){ return 'maximized'; }
+         else if(g.$jc.hasClass('jp-viewstate-hidden')){ return 'hidden'; }
+         else { return null; }
       };
 
       // Sets visual state of the player
@@ -484,7 +490,7 @@
          g.$jc
             .css('visibility', 'visible')
             .addClass('opt-pos-' + g.options.jukeboxOptions.position)
-            .addClass('opt-' + ((g.options.jukeboxOptions.cover) ? '' : 'no-') + 'cover')
+            .addClass('opt-ui-' + ((g.options.jukeboxOptions.uiCover) ? '' : 'no-') + 'cover')
             .addClass(g.options.jukeboxOptions.className);
 
 
@@ -637,7 +643,7 @@
          }
 
          // If cover art should be shown
-         if(g.options.jukeboxOptions.cover){
+         if(g.options.jukeboxOptions.uiCover){
             // If track image exists
             if(g.track.poster){
                $('.jp-cover', g.$jc).html(
