@@ -201,6 +201,9 @@
 
       // Clears the playlist but leaves links playable
       this.clear = function(){
+         $('.jp-cover', g.$jc).html('<div class="jp-cover-default"></div>');
+         $('.jp-title', g.$jc).html('');
+
          return g.pl.remove();
       };
 
