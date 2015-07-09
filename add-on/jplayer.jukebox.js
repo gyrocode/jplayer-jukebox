@@ -22,6 +22,7 @@
             'playlistOptions': {
                'enableRemoveControls': true
             },
+            'swfPath': '//gyrocode.github.io/jplayer-jukebox/0.6.0/',
             'supplied': 'mp3,oga,wav,fla,webma,xspf',
             'smoothPlayBar': true,
             'keyEnabled': true,
