@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <trackList>
+    <track>
+      <location>//gyrocode.github.io/jplayer-jukebox/demo/media/mp3.mp3</location>
+      <title>.xspf - .mp3</title>
+      <creator>Lucas Gonze</creator>
+      <image>//gyrocode.github.io/jplayer-jukebox/demo/media/cover1.jpg</image>
+    </track>
+    <track>
+      <location>//gyrocode.github.io/jplayer-jukebox/demo/media/ogg.ogg</location>
+      <title>.xspf - .ogg</title>
+      <creator>Lucas Gonze</creator>
+      <image>//gyrocode.github.io/jplayer-jukebox/demo/media/cover2.jpg</image>
+    </track>
+    <track>
+      <location>//gyrocode.github.io/jplayer-jukebox/demo/media/wav.wav</location>
+      <title>.xspf - .wav</title>
+      <creator>Lucas Gonze</creator>
+      <image></image>
+    </track>
+  </trackList>
+</playlist>
