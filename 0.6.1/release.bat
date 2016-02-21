@@ -1,1 +1,0 @@
-copy /B jquery.jplayer.min.js+jplayer.playlist.min.js+jplayer.jukebox.min.js jplayer.jukebox.bundle.min.js
