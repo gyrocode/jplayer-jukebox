@@ -423,6 +423,10 @@
   line-height:2em;
 }
 
+.jp-playlist ul:empty {
+  height:200px;
+}
+
 .jp-playlist li {
   clear:both;
   padding:0 0 0 15px;
