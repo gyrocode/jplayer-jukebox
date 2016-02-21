@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.0 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.2 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
@@ -253,7 +253,7 @@
 
                } else {
                   var track = {
-                     'title':    ($el.attr('title'))    ? $el.attr('title')  : _getFilenameFromUrl($el.attr('href')),
+                     'title':    ($el.attr('title'))    ? $el.attr('title')  : $el.text(),
                      'artist':   ($el.data('artist'))   ? $el.data('artist') : "",
                      'album':    ($el.data('album'))    ? $el.data('album')  : "",
                      'poster':   ($el.data('image'))    ? $el.data('image')  : "",
@@ -268,6 +268,11 @@
                   };
 
                   track[type] = url;
+
+                  // If title is empty, use file name instead
+                  if(!track['title']){
+                     track['title'] = _getFilenameFromUrl($el.attr('href'));
+                  }
 
                   _addTrack(track);
                }
