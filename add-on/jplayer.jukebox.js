@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.2 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.3 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
@@ -22,7 +22,7 @@
             'playlistOptions': {
                'enableRemoveControls': true
             },
-            'swfPath': '//gyrocode.github.io/jplayer-jukebox/0.6.0/',
+            'swfPath': '//gyrocode.github.io/jplayer-jukebox/0.6.3/',
             'supplied': 'mp3,oga,wav,fla,webma,xspf',
             'smoothPlayBar': true,
             'keyEnabled': false,
