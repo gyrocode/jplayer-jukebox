@@ -761,7 +761,8 @@
 
 @media only screen and (max-width:479px) {
 
-.opt-pos-float-bl {
+.opt-pos-float-bl.jp-viewstate-minimized,
+.opt-pos-float-bl.jp-viewstate-maximized {
   z-index:999;
   position:fixed;
   bottom:0;
