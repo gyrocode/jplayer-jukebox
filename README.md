@@ -108,7 +108,7 @@ Credits
 Copyright
 ---------
 
-Michael Ryvkin, [gyrocode.com](http://www.gyrocode.com)
+Gyrocode, [gyrocode.com](http://www.gyrocode.com)
 
 
 License
