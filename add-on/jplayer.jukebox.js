@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.4 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.5 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
@@ -17,7 +17,8 @@
                'position': 'float-bl',
                'viewState': 'minimized',
                'selectorParse': window.document,
-               'id': 'jplayer_jukebox'
+               'id': 'jplayer_jukebox',
+               'playLink': true
             },
             'playlistOptions': {
                'enableRemoveControls': true
@@ -77,7 +78,7 @@
       }
 
 
-      // Translating jukeboxOptions properties into existing properties of playlistOptions 
+      // Translating jukeboxOptions properties into existing properties of playlistOptions
       g.options.playlistOptions.enableRemoveControls = g.options.jukeboxOptions.uiRemove;
 
 
@@ -334,7 +335,7 @@
 
             } else {
                if(g.options.jukeboxOptions.position === 'fixed-t'){
-                  var playlistHeight = 
+                  var playlistHeight =
                      $(g.$jc).hasClass('jp-state-playlist')
                         ? $('.jp-playlist', g.$jc).outerHeight()
                         : 0;
@@ -573,7 +574,10 @@
                track.data.btn.on('click', null, { 'track': track }, function(e){ _onClick(e); });
                track.data.el.before(track.data.btn);
                track.data.el.addClass('jp-page-link');
-               track.data.el.on('click', null, { 'track': track }, function(e){ _onClick(e); });
+
+               if(g.options.jukeboxOptions.playLink){
+                  track.data.el.on('click', null, { 'track': track }, function(e){ _onClick(e); });
+               }
             } else {
                track.data.btn = track.data.el.prev('.jp-page-btn-play');
             }
