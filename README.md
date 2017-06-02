@@ -19,11 +19,11 @@ Installation
 
     ```
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- jPlayer Jukebox add-on -->
-    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.6.6/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.6.6/jplayer.jukebox.bundle.min.js"></script>
+    <link type="text/css" href="//gyrocode.github.io/jplayer-jukebox/0.6.6/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="//gyrocode.github.io/jplayer-jukebox/0.6.6/jplayer.jukebox.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(document).ready(function(){
