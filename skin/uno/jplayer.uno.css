@@ -1,4 +1,4 @@
-/*! Uno skin for jPlayer Jukebox add-on 0.6.x (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! Uno skin for jPlayer Jukebox add-on 0.6.x (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
 @font-face {
   font-family:'uno';
   src:url('fonts/uno.eot');
@@ -101,6 +101,7 @@
   font-size:16px;
   line-height:1.6;
   width:420px;
+  text-align:left;
 }
 
 .jp-gui {
