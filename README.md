@@ -7,7 +7,7 @@ jPlayer Jukebox is add-on to jPlayer that allows to play media files on the page
 Demo
 ----
 
-Demo is available at [gyrocode.com/projects/jplayer-jukebox/](http://www.gyrocode.com/projects/jplayer-jukebox/).
+Demo is available at [gyrocode.com/projects/jplayer-jukebox/](https://www.gyrocode.com/projects/jplayer-jukebox/).
 
 
 Installation
@@ -22,8 +22,8 @@ Installation
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- jPlayer Jukebox add-on -->
-    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.6.5/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
-    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.6.5/jplayer.jukebox.bundle.min.js"></script>
+    <link type="text/css" href="http://gyrocode.github.io/jplayer-jukebox/0.6.6/skin/uno/jplayer.uno.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://gyrocode.github.io/jplayer-jukebox/0.6.6/jplayer.jukebox.bundle.min.js"></script>
 
     <script type="text/javascript">
        $(document).ready(function(){
@@ -81,13 +81,13 @@ Installation
 Documentation
 -------------
 
-Documentation is available at [gyrocode.com/projects/jplayer-jukebox/](http://www.gyrocode.com/projects/jplayer-jukebox/).
+Documentation is available at [gyrocode.com/projects/jplayer-jukebox/](https://www.gyrocode.com/projects/jplayer-jukebox/).
 
 
 Feedback
 --------
 
-Please leave your comments or suggestions [here](http://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond).
+Please leave your comments or suggestions [here](https://www.gyrocode.com/articles/jplayer-jukebox-add-on-yahoo-media-player-replacement/#respond).
 Issues can be reported on [github.com](https://github.com/gyrocode/jplayer-jukebox/issues).
 
 
@@ -108,7 +108,7 @@ Credits
 Copyright
 ---------
 
-Gyrocode, [gyrocode.com](http://www.gyrocode.com)
+Gyrocode, [gyrocode.com](https://www.gyrocode.com)
 
 
 License

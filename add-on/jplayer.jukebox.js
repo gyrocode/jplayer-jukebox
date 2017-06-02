@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.5 (http://www.gyrocode.com/projects/jplayer-jukebox) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.6 (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
@@ -402,7 +402,7 @@
             + '         <div class="jp-cover" aria-label="cover art"><div class="jp-cover-default"></div></div>'
             + '         <div class="jp-title" aria-label="title"></div>'
             + '      </div>'
-            + '      <div class="jp-app-bar"><a href="http://www.gyrocode.com/projects/jplayer-jukebox" target="_blank">jPlayer Jukebox</a></div>'
+            + '      <div class="jp-app-bar"><a href="https://www.gyrocode.com/projects/jplayer-jukebox/" target="_blank">jPlayer Jukebox</a></div>'
             + '      <div class="jp-viewstate-control jp-gui-bg"><div class="jp-gui-texture"></div><div class="jp-gui-gradient"></div><button class="jp-viewstate-toggle" role="button" tabindex="0">&times;</button></div>'
             + '   </div>'
             + '</div>'
