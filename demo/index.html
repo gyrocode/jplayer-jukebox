@@ -46,7 +46,13 @@
       $('#btn-api-remove').on('click', function(){ jpjb.remove(); });
       $('#btn-api-remove-2').on('click', function(){ jpjb.remove(2); });
       $('#btn-api-clear').on('click', function(){ jpjb.clear(); });
-      $('#btn-api-parse').on('click', function(){ jpjb.parse(); });
+      $('#btn-api-parse').on('click', function(){       
+         $('#media-container').append(
+            '<a href="media/mp3.mp3" title="" data-artist="Lucas Gonze" data-image="media/cover1.jpg" data-download="1" data-buy="https://www.freesound.org/people/lucasgonze/sounds/58970/">New .MP3 file</a><br />'
+         );
+
+         jpjb.parse(); 
+      });
 
       $('#btn-api-setViewState-minimized').on('click', function(){ jpjb.setViewState('minimized', 400); });
       $('#btn-api-setViewState-maximized').on('click', function(){ jpjb.setViewState('maximized', 400); });
@@ -78,12 +84,12 @@ The script was created as Yahoo! Media Player replacement after Yahoo! decided t
 
 <h2>Demo</h2>
 
-<p>
+<p id="media-container">
 <a href="media/wav.wav" title="" data-artist="Lucas Gonze">.WAV file</a><br />
 <a href="media/mp3.mp3" title="" data-artist="Lucas Gonze" data-image="media/cover1.jpg" data-download="1" data-buy="https://www.freesound.org/people/lucasgonze/sounds/58970/">.MP3 file</a><br />
 <a href="media/ogg.ogg" title="" data-artist="Lucas Gonze">.OGG file</a><br />
 <a href="media/xspf.xspf">.XSPF file</a><br />
-<a href="media/xspf.xml" type="application/xspf+xml">.XML file in XSPF format</a>
+<a href="media/xspf.xml" type="application/xspf+xml">.XML file in XSPF format</a><br />
 </p>
 
 
