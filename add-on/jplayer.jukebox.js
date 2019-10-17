@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.6 (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.7 (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
@@ -233,7 +233,7 @@
 
          // List of links that haven't been processed
          var $anchors_media = $('a.jp-media', $(g.options.jukeboxOptions.selectorParse));
-         var $anchors = ($anchors_media.length) ? $anchors_media : $('a', g.options.jukeboxOptions.selectorParse).not('.jp-page-link, .jp-playlist-item-free, .jp-media-ignore');
+         var $anchors = ($anchors_media.length) ? $anchors_media : $('a', g.options.jukeboxOptions.selectorParse).not('.jp-page-link, .jp-playlist-item-free, .jp-playlist-item-download, .jp-media-ignore');
 
          var i, $el, type, url;
 
