@@ -103,7 +103,7 @@
 
          // Create link to download a song
          if(media.download){
-            listItem += '<a href="' + media.url + '" class="jp-playlist-item-download" target="_blank"></a>';
+            listItem += '<a href="' + media.url + '" class="jp-playlist-item-download" target="_blank" download></a>';
          }
 
          // Create link to buy a song
