@@ -1,4 +1,4 @@
-/*! jPlayer Jukebox add-on 0.6.7 (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
+/*! jPlayer Jukebox add-on 0.6.8 (https://www.gyrocode.com/projects/jplayer-jukebox/) ~ (c) Gyrocode.com ~ MIT License */
 (function($, undefined){
    jPlayerJukebox = function(options){
       //
